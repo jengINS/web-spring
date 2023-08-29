@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="/image/ico-logo.ico">
+
+  <title>A.C.E. Parts Co., Ltd.</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link  rel="stylesheet" th:href="@{css/bootstrap.css}" />
+  <link rel="stylesheet" th:href="@{custom.css}">
+  <link rel="stylesheet" th:href="@{lib/DataTables/datatables.min.css}">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js"
+    integrity="sha512-lDL6DD6x4foKuSTkRUKIMQJAoisDeojVPXknggl4fZWMr2/M/hMiKLs6sqUvxP/T2zXdrDMbLJ0/ru8QSZrnoQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <style>
+    /* .list-group-item {
+      border: 1px solid rgba(255, 255, 255, 1) !important;
+    } */
+  </style>
+</head>
+
+<body>
+  <div th:replace="navbar :: navbar"></div>
+
+  <div class="container-fluid">
+    <div class="row p-3">
+      <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12">
+        <div class="card bg-dark text-white">
+          <div class="card-body" style="background-color: rgba(0, 0, 0, 0.3);">
+            <div class="d-flex flex-column">
+              <h5><i class="bi bi-clipboard2-check"></i> Letter Of Guarantee</h5>
+            </div>
+            <ul class="menu-list flex-grow-1 mt-3 list-unstyled">
+              <li class="collapsed">
+                <a class="m-link active" data-bs-toggle="collapse" data-bs-target="#dashboard-Components" href="#">
+                  <i class="icofont-home fs-5"></i> <span>Dashboard</span> <span
+                    class="arrow icofont-dotted-down ms-auto text-end fs-5"></span></a>
+                <!-- Menu: Sub menu ul -->
+                <ul class="sub-menu collapse show" id="dashboard-Components">
+                  <li><a class="ms-link" href="LOGManagement.html">
+                      <span>Letter View</span></a></li>
+                  <li><a class="ms-link" href="logDetail.html">
+                      <span>Letter Detail</span></a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+        <div class="card w-100 h-100">
+          <div class="card-body">
+            <h3>Upload Letter Of Guarantee</h3>
+            <hr> 
+            <form>
+              <div class="form-group row">
+                <label for="LetterID" class="col-2 col-form-label">LetterID</label> 
+                <div class="col-10">
+                  <input id="LetterID" name="Letterid" type="text" required="required" class="form-control">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="projectId" class="col-2 col-form-label">Select</label> 
+                <div class="col-10">
+                  <select id="projectId" name="projectId" required="required" class="custom-select">
+                    <option value="1">Project 1</option>
+                    <option value="2">Project 2</option>
+                    <option value="3">Project 3</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="guatantee" class="col-2 col-form-label">Guatantee</label> 
+                <div class="col-10">
+                  <input id="guatantee" name="guatantee" type="text" required="required" class="form-control">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="text" class="col-2 col-form-label">Customer</label> 
+                <div class="col-10">
+                  <input id="text" name="text" type="text" class="form-control" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="sDate" class="col-2 col-form-label">Start Date</label> 
+                <div class="col-4">
+                  <input id="sDate" name="sDate" type="date" required="required" class="form-control">
+                </div>
+                <label for="eDate" class="col-1 col-form-label"style="padding-right: 0px;">End Date</label> 
+                <div class="col-5">
+                  <input id="eDate" name="eDate" type="date" required="required" class="form-control">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="select" class="col-2 col-form-label">Status</label> 
+                <div class="col-10">
+                  <select id="select" name="select" class="custom-select">
+                    <option value="In Guarantee">In Guarantee</option>
+                    <option value="2">Completed</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="text" class="col-2 col-form-label">Letter Of Guarantee (.PDF)</label> 
+                <div class="col-10">
+                  <input id="logPdf" name="text" type="file" class="form-control" required>
+                </div>
+              </div> 
+              <div class="form-group row">
+                <div class="offset-2 col-5">
+                  <button name="submit" type="submit" class="btn btn-primary w-100">บันทึกข้อมูล</button>
+                </div>
+                <div class="col-5">
+                  <button type="button" class="btn btn-secondary w-100" onclick="history.back();">ย้อนกลับ</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script th:src="@{js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{lib/DataTables/datatables.min.js}"></script>
+  
+
+
+</body>
+
+</html>

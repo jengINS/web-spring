@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico" />
+
+  <title>A.C.E. Parts Co., Ltd.</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.css" rel="stylesheet" th:href="@{css/bootstrap.css}">
+  <link rel="stylesheet" th:href="@{custom.css}">
+  <link rel="stylesheet" th:href="@{lib/DataTables/datatables.min.css}">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js"
+    integrity="sha512-lDL6DD6x4foKuSTkRUKIMQJAoisDeojVPXknggl4fZWMr2/M/hMiKLs6sqUvxP/T2zXdrDMbLJ0/ru8QSZrnoQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <style>
+    .list-group-item {
+      /* border: 1px solid rgba(255, 255, 255, 1) !important; */
+    }
+    .card-body {
+    
+    padding: 0.25rem;
+  }
+  </style>
+  <script>
+    $(function () {
+      $("#nav-placeholder").load("/navbar");
+      $("#sidenav-placeholder").load("/accountSideNav");
+    });
+  </script>
+</head>
+
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="container-fluid">
+    <div class="row p-3">
+      <div id="sidenav-placeholder" class="col-xl-2 col-lg-2 col-md-12 col-sm-12"></div>
+      <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+        <div class="card w-100 h-100">
+          <div class="card-body">
+
+            <div class="w-100 d-flex flex-row justify-content-between my-2">
+              <h3>Expenses</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="table" id="TableList">
+                <thead>
+                  <tr>
+                    <th>NO.</th>
+                    <th>DATE</th>
+                    <th>PAYEE</th>
+                    <th>TYPE</th>
+                    <th>DESCRIPTION</th>
+                    <th>AMOUNT</th>
+                    <th>VAT</th>
+                    <th>TOTAL</th>
+                    <th>ADVANCED</th>
+                    <th>METHOD</th>
+                    <th>PAID DATE</th>
+                    <th>PROJECT</th>
+                    <th>REMARK</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>16/12/2022</td><td>หจก.ศิลป์ฟ้าไทยอุตสาหกรรม</td><td>Vat</td><td>ค่าตู้บานเลื่อน  12 ตู้</td><td>30,000.00</td><td>2,100.00</td><td>32,100.00</td><td>Cash</td><td>Withdraw Cash</td><td>10/01/2023</td><td>D084</td><td>เงินสด</td></tr>
+                    <tr><td>2</td><td>03/01/2023</td><td>คุณเจ</td><td>MSF</td><td>Toll way</td><td>5,000.00</td><td>0.00</td><td>5,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>10/01/2023</td><td>D070</td><td>เงินสด</td></tr>
+                    <tr><td>3</td><td>23/12/2022</td><td>บจ.มาย พี.เอส กรุ๊ป</td><td>Vat</td><td>ค่า Pom Black  100 ชิ้น</td><td>22,560.00</td><td>1,579.20</td><td>24,139.00</td><td>Cash</td><td>Withdraw Cash</td><td>10/01/2023</td><td>D070</td><td>เงินสด</td></tr>
+                    <tr><td>4</td><td>28/12/2022</td><td>บมจ.ออฟฟิศเมท</td><td>Vat</td><td>ค่าอุปกรณ์ Office</td><td>1,295.31</td><td>90.67</td><td>1,386.00</td><td>Nort</td><td>Petty Cash</td><td>16/01/2023</td><td>Share</td><td>SCB</td></tr>
+                    <tr><td>5</td><td>26/12/2022</td><td>CP all</td><td>no vat</td><td>เลี้ยงรับรองลูกค้า</td><td>110.00</td><td>0.00</td><td>110.00</td><td>Bo</td><td>Petty Cash</td><td>16/01/2023</td><td>D040</td><td></td></tr>
+                    <tr><td>6</td><td>26/12/2022</td><td>นวรัตน์</td><td>no vat</td><td>เลี้ยงรับรองลูกค้า</td><td>100.00</td><td>0.00</td><td>100.00</td><td>Bo</td><td>Petty Cash</td><td>16/01/2023</td><td>D063</td><td></td></tr>
+                    <tr><td>7</td><td>04/01/2023</td><td>มนต์สินี</td><td>no vat</td><td>เลี้ยงรับรองลูกค้า</td><td>245.00</td><td>0.00</td><td>245.00</td><td>Ying</td><td>Petty Cash</td><td>16/01/2023</td><td>D070</td><td></td></tr>
+                    <tr><td>8</td><td>04/01/2023</td><td>มนต์สินี</td><td>no vat</td><td>เลี้ยงรับรองลูกค้า</td><td>50.00</td><td>0.00</td><td>50.00</td><td>Ying</td><td>Petty Cash</td><td>16/01/2023</td><td>D050</td><td></td></tr>
+                    <tr><td>9</td><td>26/12/2022</td><td>Thai yamazaki</td><td>no vat</td><td>เลี้ยงรับรองลูกค้า</td><td>220.00</td><td>0.00</td><td>220.00</td><td>Ying</td><td>Petty Cash</td><td>16/01/2023</td><td>D084</td><td></td></tr>
+                    <tr><td>10</td><td>01/12/2022</td><td>มนต์สินี</td><td>no vat</td><td>ค่าหัวสกูร  200 ตัว</td><td>503.22</td><td>0.00</td><td>503.22</td><td>Ying</td><td>Petty Cash</td><td>16/01/2023</td><td>D070</td><td></td></tr>
+                    <tr><td>11</td><td>11/11/2022</td><td>มนต์สินี</td><td>no vat</td><td>ค่า Sample Pom Black</td><td>610.00</td><td>0.00</td><td>610.00</td><td>Cash</td><td>Petty Cash</td><td>16/01/2023</td><td>D070</td><td></td></tr>
+                    <tr><td>12</td><td>22/12/2022</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>16/01/2023</td><td>D070</td><td>ไปมักกะสัน งาน HID ฐาน Interlock พบคุณอยุธยา</td></tr>
+                    <tr><td>13</td><td>03/01/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>16/01/2023</td><td>D050</td><td>ไปมักกะสัน งาน ALS ประกับรัดสายเซ็นโซดายน์ ตามเรื่องซื้อ</td></tr>
+                    <tr><td>14</td><td>04/01/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>16/01/2023</td><td>D084</td><td>ไปมักกะสัน งาน ตู้เก็บเอกสาร ส่งใบเสนอราคาให้นายตรวจ</td></tr>
+                    <tr><td>15</td><td>05/01/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>16/01/2023</td><td>D079</td><td>ไปมักกะสัน งาน พัดลมอุตสาหกรรม ตามเรื่องซื้อ</td></tr>
+                    <tr><td>16</td><td>12/01/2023</td><td>คุณเหมย</td><td>no Vat</td><td>SSO (900)  กองทุนเงินทดแทนปี2566 (540)</td><td>1,440.00</td><td>0.00</td><td>1,440.00</td><td></td><td>Withdraw Cash</td><td>16/01/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>17</td><td>06/01/2023</td><td>SRT</td><td>no vat</td><td>สนับสนุนงานกีฬา</td><td>2,000.00</td><td>0.00</td><td>2,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>25/01/2023</td><td>D040</td><td>เงินสด</td></tr>
+                    <tr><td>18</td><td>06/01/2023</td><td>คุณแอน</td><td>MSF</td><td>Toll way</td><td>500.00</td><td>0.00</td><td>500.00</td><td>Cash</td><td>Withdraw Cash</td><td>25/01/2023</td><td>D071</td><td>เงินสด</td></tr>
+                    <tr><td>19</td><td>29/01/2023</td><td>บจ.จิรวัฒน์</td><td>no vat</td><td>ค่าของ</td><td>80,000.00</td><td>0.00</td><td>80,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>25/01/2023</td><td>D050</td><td>เงินสดฝากบัญชีทั้งหมด</td></tr>
+                    <tr><td>20</td><td>07/10/2022</td><td>บจ.เวสท์บาวด์</td><td>Vat</td><td>ค่าของ</td><td>54,320.00</td><td>3,802.40</td><td>58,122.40</td><td>Cash</td><td>Withdraw Cash</td><td>25/01/2023</td><td>D027</td><td>เงินสดฝากบัญชีทั้งหมด</td></tr>
+                    <tr><td>21</td><td>11/01/2023</td><td>หจก.ซูเปอร์ซัพ</td><td>Vat</td><td>ค่าของ</td><td>7,000.00</td><td>490.00</td><td>7,490.00</td><td>Cash</td><td>Withdraw Cash</td><td>25/01/2023</td><td>D050</td><td>เงินสดฝากบัญชีทั้งหมด</td></tr>
+                    <tr><td>22</td><td>12/01/2023</td><td>บจ.แฟนแทสติค ไทรอัม</td><td>Vat</td><td>ค่าของ</td><td>9,700.00</td><td>679.00</td><td>10,379.00</td><td>Cash</td><td>Withdraw Cash</td><td>25/01/2023</td><td>D050</td><td>เงินสดฝากบัญชีทั้งหมด</td></tr>
+                    <tr><td>23</td><td>10/01/2023</td><td>บจ.เดอะ ช็อกโกแลต แฟคตอรี่</td><td>no vat</td><td>เลี้ยงรับรองลูกค้า</td><td>270.00</td><td>0.00</td><td>270.00</td><td>Ying</td><td>Petty Cash</td><td>27/01/2023</td><td>D028</td><td></td></tr>
+                    <tr><td>24</td><td>16/01/2023</td><td>บจ.พีเอส ประตูม้วน</td><td>Vat</td><td>ค่าประตูม้วน</td><td>24,000.00</td><td>1,680.00</td><td>25,680.00</td><td>Cash</td><td>Withdraw Cash</td><td>27/01/2023</td><td>D062</td><td>เงินสด</td></tr>
+                    <tr><td>25</td><td>16/01/2023</td><td>บจ.พีเอส ประตูม้วน</td><td>Vat</td><td>ค่าประตูม้วน</td><td>4,000.00</td><td>280.00</td><td>4,160.00</td><td>Cash</td><td>Withdraw Cash</td><td>27/01/2023</td><td>D062</td><td>เงินสด</td></tr>
+                    <tr><td>26</td><td>16/01/2023</td><td>ช่าง</td><td>no vat</td><td>ค่าใช้จ่ายอุปกรณ์เพิ่มเติม  สำรอง</td><td>1,000.00</td><td>0.00</td><td>1,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>27/01/2023</td><td>D062</td><td>เงินสด</td></tr>
+                    <tr><td>27</td><td>16/01/2023</td><td>อยุธยา</td><td>MSF</td><td>Toll way</td><td>5,000.00</td><td>0.00</td><td>5,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>27/01/2023</td><td>D062</td><td>เงินสด</td></tr>
+                    <tr><td>28</td><td>16/01/2023</td><td>สมชาย</td><td>MSF</td><td>Toll way</td><td>3,000.00</td><td>0.00</td><td>3,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>27/01/2023</td><td>D062</td><td>เงินสด</td></tr>
+                    <tr><td>29</td><td>16/01/2023</td><td>บจ.แอบปอน</td><td>Vat</td><td>ค่าน็อต</td><td>1,115.10</td><td>78.06</td><td>1,195.00</td><td>Cash</td><td>Withdraw Cash</td><td>27/01/2023</td><td>D075</td><td>เงินสด</td></tr>
+                    <tr><td>30</td><td>16/01/2023</td><td>คุณเจ</td><td>MSF</td><td>Toll way</td><td>1,500.00</td><td>0.00</td><td>1,500.00</td><td>Cash</td><td>Withdraw Cash</td><td>27/01/2023</td><td>D075</td><td>เงินสด</td></tr>
+                    <tr><td>31</td><td>16/01/2023</td><td>คุณเก๋</td><td>MSF</td><td>Toll way</td><td>2,500.00</td><td>0.00</td><td>2,500.00</td><td>Cash</td><td>Withdraw Cash</td><td>27/01/2023</td><td>D075</td><td>เงินสด</td></tr>
+                    <tr><td>32</td><td>16/01/2023</td><td>ร้านค้า</td><td>no vat</td><td>ค่าชุบน็อต</td><td>1,000.00</td><td>0.00</td><td>1,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>27/01/2023</td><td>D075</td><td>เงินสด</td></tr>
+                    <tr><td>33</td><td>16/01/2023</td><td>บจ.เอ็กโซ เทรดดิ้ง</td><td>no vat</td><td>ค่าของ  MMY20K-1000V</td><td>19,364.80</td><td>0.00</td><td>19,365.00</td><td>Cash</td><td>Withdraw Cash</td><td>27/01/2023</td><td>D078</td><td>เงินสด</td></tr>
+                    <tr><td>34</td><td>16/01/2023</td><td>คุณเก๋</td><td>MSF</td><td>Toll way</td><td>9,000.00</td><td>0.00</td><td>9,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>27/01/2023</td><td>D078</td><td>เงินสด</td></tr>
+                    <tr><td>35</td><td>13/01/2023</td><td>บจ.แอดไวศ์ ไอที อินฟินิท</td><td>no vat</td><td>ค่าอุปกรณ์ Office  หมึกเครื่องปริ้น</td><td>7,380.00</td><td>0.00</td><td>7,380.00</td><td>Nort</td><td>Petty Cash</td><td>27/01/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>36</td><td>16/01/2023</td><td>ช่าง</td><td>no vat</td><td>เบิกค่าแก้งานปูนเก่า</td><td>5,000.00</td><td>0.00</td><td>5,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>27/01/2023</td><td>D062</td><td>เงินสด</td></tr>
+                    <tr><td>37</td><td>07/12/2022</td><td>ปิยทัศน์</td><td>no vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>430.00</td><td>0.00</td><td>430.00</td><td>Jumbo</td><td>Petty Cash</td><td>27/01/2023</td><td>D081</td><td>ไปมักกะสัน หัวลำโพง เอาสเปคไปให้ ส. ดูใหม่</td></tr>
+                    <tr><td>38</td><td>09/12/2022</td><td>ปิยทัศน์</td><td>no vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>400.00</td><td>0.00</td><td>400.00</td><td>Jumbo</td><td>Petty Cash</td><td>27/01/2023</td><td>D080</td><td>ไปมักกะสัน หัวลำโพง คุยTOR</td></tr>
+                    <tr><td>39</td><td>13/12/2022</td><td>ปิยทัศน์</td><td>no vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Jumbo</td><td>Petty Cash</td><td>27/01/2023</td><td>D040</td><td>ไปมักกะสัน ยืนยันผลิตเหล็ก</td></tr>
+                    <tr><td>40</td><td>15/12/2022</td><td>ปิยทัศน์</td><td>no vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Jumbo</td><td>Petty Cash</td><td>27/01/2023</td><td>D048</td><td>ไปมักกะสัน เข้าติดตามงาน</td></tr>
+                    <tr><td>41</td><td>16/12/2022</td><td>ปิยทัศน์</td><td>no vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>450.00</td><td>0.00</td><td>450.00</td><td>Jumbo</td><td>Petty Cash</td><td>27/01/2023</td><td>D075</td><td>ไปมักกะสัน หัวลำโพง เข้าไปรับใบสั่ง</td></tr>
+                    <tr><td>42</td><td>20/12/2022</td><td>ปิยทัศน์</td><td>no vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>450.00</td><td>0.00</td><td>450.00</td><td>Jumbo</td><td>Petty Cash</td><td>27/01/2023</td><td>D048</td><td>ไปมักกะสัน หัวลำโพง ติดตามงาน</td></tr>
+                    <tr><td>43</td><td>22/12/2022</td><td>ปิยทัศน์</td><td>no vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Jumbo</td><td>Petty Cash</td><td>27/01/2023</td><td>D068</td><td>ไปมักกะสัน ติดตามงาน</td></tr>
+                    <tr><td>44</td><td>23/12/2022</td><td>ปิยทัศน์</td><td>no vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>450.00</td><td>0.00</td><td>450.00</td><td>Jumbo</td><td>Petty Cash</td><td>27/01/2023</td><td>D080</td><td>ไปมักกะสัน หัวลำโพง เอาตัวอย่างไปให้ดู</td></tr>
+                    <tr><td>45</td><td>26/12/2022</td><td>ปิยทัศน์</td><td>no vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>450.00</td><td>0.00</td><td>450.00</td><td>Jumbo</td><td>Petty Cash</td><td>27/01/2023</td><td>D081</td><td>ไปมักกะสัน หัวลำโพง เอาสเปคไปให้ส.ดู</td></tr>
+                    <tr><td>46</td><td>27/12/2022</td><td>ปิยทัศน์</td><td>no vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>550.00</td><td>0.00</td><td>550.00</td><td>Jumbo</td><td>Petty Cash</td><td>27/01/2023</td><td>D075</td><td>ไปมักกะสัน หัวลำโพง ติดตตามงาน</td></tr>
+                    <tr><td>47</td><td>06/01/2023</td><td>ปิยทัศน์</td><td>no vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>400.00</td><td>0.00</td><td>400.00</td><td>Jumbo</td><td>Petty Cash</td><td>27/01/2023</td><td>D081</td><td>ไปมักกะสัน หัวลำโพง เอาสเปคไปให้ ส.ดู</td></tr>
+                    <tr><td>48</td><td>10/01/2023</td><td>ปิยทัศน์</td><td>no vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>280.00</td><td>0.00</td><td>280.00</td><td>Jumbo</td><td>Petty Cash</td><td>27/01/2023</td><td>D075</td><td>ไปมักกะสัน ติดตามงาน</td></tr>
+                    <tr><td>49</td><td>11/01/2023</td><td>ปิยทัศน์</td><td>no vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>400.00</td><td>0.00</td><td>400.00</td><td>Jumbo</td><td>Petty Cash</td><td>27/01/2023</td><td>D080</td><td>ไปมักกะสัน หัวลำโพง ติดตามงาน และ สเปค</td></tr>
+                    <tr><td>50</td><td>16/01/2023</td><td>มนต์สินี</td><td>no vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>27/01/2023</td><td>D079</td><td>ไปมักกะสัน พัดลม ตามเรื่องซื้อ</td></tr>
+                    <tr><td>51</td><td>25/01/2023</td><td>เงินเดือน</td><td>no Vat</td><td>เงินเดือนพนักงาน ด.1/66</td><td>16,500.00</td><td>0.00</td><td>16,500.00</td><td></td><td>Withdraw Cash</td><td>27/01/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>52</td><td>25/01/2023</td><td>กองกลาง</td><td>no Vat</td><td>ดอกเบี้ยเงินกู้ ด.1/66 (450,000*5.250%*27/365)</td><td>1,747.60</td><td>0.00</td><td>1,747.60</td><td></td><td>Withdraw Cash</td><td>27/01/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>53</td><td>25/01/2023</td><td>กองกลาง</td><td>no Vat</td><td>ดอกเบี้ยเงินกู้ ด.1/66 (150,000*5.250%*3/365)</td><td>64.73</td><td>0.00</td><td>64.73</td><td></td><td>Withdraw Cash</td><td>27/01/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>54</td><td>18/01/2023</td><td>SRT</td><td>no vat</td><td>เงินสดค้ำประกัน</td><td>2,674.00</td><td>0.00</td><td>2,674.00</td><td>Cash</td><td>Petty Cash</td><td>10/02/2023</td><td>D071</td><td></td></tr>
+                    <tr><td>55</td><td>30/01/2023</td><td>บจ.แอบปอน</td><td>no vat</td><td>ค่าอุปกรณ์  ค่าน็อต-เบิกเพิ่มเติม</td><td>10.10</td><td>0.00</td><td>10.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/02/2023</td><td>D075</td><td></td></tr>
+                    <tr><td>56</td><td>30/01/2023</td><td>ร้านค้า</td><td>no vat</td><td>ค่าอุปกรณ์  แหวนแปะ</td><td>60.00</td><td>0.00</td><td>60.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/02/2023</td><td>D075</td><td></td></tr>
+                    <tr><td>57</td><td>30/01/2023</td><td>บจ.เอ็กโซ เทรดดิ้ง</td><td>Vat</td><td>ค่าสินค้า</td><td>29,416.00</td><td>2,059.12</td><td>31,475.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/02/2023</td><td>D077</td><td>เงินสด</td></tr>
+                    <tr><td>58</td><td>30/01/2023</td><td>บจ.เอ็กโซ เทรดดิ้ง</td><td>no vat</td><td>ค่าส่งของ</td><td>62.00</td><td>0.00</td><td>62.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/02/2023</td><td>D077</td><td>เงินสด</td></tr>
+                    <tr><td>59</td><td>26/01/2023</td><td>บมจ.ออฟฟิศเมท</td><td>vat</td><td>ค่าอุปกรณ์ Office</td><td>1,150.45</td><td>80.53</td><td>1,231.00</td><td>Big</td><td>Petty Cash</td><td>15/02/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>60</td><td>20/01/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>280.00</td><td>0.00</td><td>280.00</td><td>Bo</td><td>Petty Cash</td><td>15/02/2023</td><td>D071</td><td>ไปมักกะสัน งาน ตู้เอกสารบานเลื่อน สอบถามเรื่องจัดซื้อ</td></tr>
+                    <tr><td>61</td><td>24/01/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>15/02/2023</td><td>D040</td><td>ไปมักกะสัน งาน เหล็กตัวที ส่งของ</td></tr>
+                    <tr><td>62</td><td>26/01/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>15/02/2023</td><td>D071</td><td>ไปมักกะสัน งาน ตู้เอกสารบานเลื่อน สอบถามเรื่องจัดซื้อ</td></tr>
+                    <tr><td>63</td><td>31/01/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>15/02/2023</td><td>D071</td><td>ไปมักกะสัน งาน ตู้เอกสารบานเลื่อน รับใบตกลง</td></tr>
+                    <tr><td>64</td><td>16/01/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>500.00</td><td>0.00</td><td>500.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/02/2023</td><td>D082</td><td>ไปมักกะสัน+หัวลำโพง งาน HID เบรกเกอร์ ติดตามเรื่องซื้อ</td></tr>
+                    <tr><td>65</td><td>17/01/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>550.00</td><td>0.00</td><td>550.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/02/2023</td><td>D081</td><td>ไปมักกะสัน+หัวลำโพง งาน พัดลมระบายอากาศ ดูเทคนิคเพิ่มเติม</td></tr>
+                    <tr><td>66</td><td>18/01/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>500.00</td><td>0.00</td><td>500.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/02/2023</td><td>D078</td><td>ไปมักกะสัน+หัวลำโพง งาน Presure sensitive module ติดตามเรื่องซื้อ</td></tr>
+                    <tr><td>67</td><td>19/01/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/02/2023</td><td>D078</td><td>ไปมักกะสัน+หัวลำโพง งาน Presure sensitive module ติดตามใบสั่งซื้อ</td></tr>
+                    <tr><td>68</td><td>20/01/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>290.00</td><td>0.00</td><td>290.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/02/2023</td><td>D077</td><td>ไปมักกะสัน+บางซื่อ งาน Recgifier module ติดตามงาน</td></tr>
+                    <tr><td>69</td><td>23/01/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>500.00</td><td>0.00</td><td>500.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/02/2023</td><td>D075</td><td>ไปมักกะสัน+หัวลำโพง งาน HID Nut เกลียวNF เตรียมส่งของ</td></tr>
+                    <tr><td>70</td><td>24/01/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/02/2023</td><td>D076</td><td>ไปมักกะสัน งาน ประตูม้วน แก้ไข TOR</td></tr>
+                    <tr><td>71</td><td>25/01/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>500.00</td><td>0.00</td><td>500.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/02/2023</td><td>D080</td><td>ไปมักกะสัน+หัวลำโพง งาน พาร์ทิชั่น ติดตามเรื่องซื้อ</td></tr>
+                    <tr><td>72</td><td>26/01/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>280.00</td><td>0.00</td><td>280.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/02/2023</td><td>D085</td><td>ไปมักกะสัน งาน สาย High Pressure ติดตามเรื่องเสนอราคา</td></tr>
+                    <tr><td>73</td><td>27/01/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>450.00</td><td>0.00</td><td>450.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/02/2023</td><td>D058</td><td>ไปมักกะสัน+หัวลำโพง งาน เครื่องชาร์ทแบตและสตาร์ท ติดตามเรื่องเทคนิค</td></tr>
+                    <tr><td>74</td><td>30/01/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>500.00</td><td>0.00</td><td>500.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/02/2023</td><td>D042</td><td>ไปมักกะสัน+หัวลำโพง งาน เครื่องมือวัด7รายการ ตามเรื่องจัดซื้อ</td></tr>
+                    <tr><td>75</td><td>31/01/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>450.00</td><td>0.00</td><td>450.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/02/2023</td><td>D058</td><td>ไปมักกะสัน+หัวลำโพง งาน เครื่องชาร์ทแบตและสตาร์ท ติดตามเรื่องเทคนิค</td></tr>
+                    <tr><td>76</td><td>06/02/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>550.00</td><td>0.00</td><td>550.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/02/2023</td><td>D062</td><td>ไปมักกะสัน+หัวลำโพง งาน ประตูม้วนไฟฟ้า ติดตั้งประตู</td></tr>
+                    <tr><td>77</td><td>17/01/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>15/02/2023</td><td>D083</td><td>ไปมักกะสัน งาน Partition เอาแบบให้หน้างานดู</td></tr>
+                    <tr><td>78</td><td>19/01/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>15/02/2023</td><td>D050</td><td>ไปมักกะสัน งาน ALS ประกับรัดสายเซ็นโซดายน์ รับใบต่อรองราคา</td></tr>
+                    <tr><td>79</td><td>24/01/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>15/02/2023</td><td>D084</td><td>ไปมักกะสัน งาน ตู้เก็บเอกสาร ตามเรื่องซื้อ</td></tr>
+                    <tr><td>80</td><td>30/01/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>15/02/2023</td><td>D027</td><td>ไปมักกะสัน งาน CSR ซีนยางกล่องไฟมอเตอร์ ตามเรื่องซื้อ</td></tr>
+                    <tr><td>81</td><td>31/01/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>15/02/2023</td><td>D084</td><td>ไปมักกะสัน งาน ตู้เก็บเอกสาร ตามเรื่องซื้อ</td></tr>
+                    <tr><td>82</td><td>06/02/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>15/02/2023</td><td>D083</td><td>ไปมักกะสัน งาน Partition ตามเรื่องซื้อ</td></tr>
+                    <tr><td>83</td><td>13/02/2023</td><td>คุณเหมย</td><td>no Vat</td><td>SSO (1,500) ด.1/66</td><td>1,500.00</td><td>0.00</td><td>1,500.00</td><td></td><td>Withdraw Cash</td><td>15/02/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>84</td><td>20/02/2023</td><td>RD</td><td>no Vat</td><td>ภ.พ.30 ด.1/66</td><td>2,016.00</td><td>0.00</td><td>2,016.00</td><td></td><td>Withdraw Cash</td><td>23/02/2023</td><td>D040</td><td></td></tr>
+                    <tr><td>85</td><td>20/02/2023</td><td>RD</td><td>no Vat</td><td>ภ.พ.30 ด.1/66</td><td>1,092.00</td><td>0.00</td><td>1,092.00</td><td></td><td>Withdraw Cash</td><td>23/02/2023</td><td>D075</td><td></td></tr>
+                    <tr><td>86</td><td>20/02/2023</td><td>คุณเหมย</td><td>no Vat</td><td>ค่าธรรมเนียมโอน</td><td>15.00</td><td>0.00</td><td>15.00</td><td></td><td>Withdraw Cash</td><td>23/02/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>87</td><td>06/02/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>28/02/2023</td><td>D040</td><td>ไปมักกะสัน งาน ซื้อเหล็กตัวที รับใบจ่าย</td></tr>
+                    <tr><td>88</td><td>13/02/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>28/02/2023</td><td>D071</td><td>ไปมักกะสัน งาน ตู้เอกสารบานเลื่อน ส่งของ</td></tr>
+                    <tr><td>89</td><td>15/02/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>28/02/2023</td><td>D063</td><td>ไปมักกะสัน งาน ติดตั้งประตูรีโมท ตามเรื่องซื้อ</td></tr>
+                    <tr><td>90</td><td>07/02/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>280.00</td><td>0.00</td><td>280.00</td><td>Ying</td><td>Petty Cash</td><td>28/02/2023</td><td>D050</td><td>ไปมักกะสัน งาน ALS ประกับรัดสายเซ็นโซดายน์ พบ วฟฟ.</td></tr>
+                    <tr><td>91</td><td>08/02/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>28/02/2023</td><td>D070</td><td>ไปมักกะสัน งาน HID ฐาน Interlock รับต่อรองราคา</td></tr>
+                    <tr><td>92</td><td>09/02/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>28/02/2023</td><td>D086</td><td>ไปมักกะสัน งาน หัวตัด Plasma ส่งใบเสนอราคา</td></tr>
+                    <tr><td>93</td><td>14/02/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>28/02/2023</td><td>D084</td><td>ไปมักกะสัน งาน ตู้เก็บเอกสาร ตามเรื่องซื้อ</td></tr>
+                    <tr><td>94</td><td>16/02/2023</td><td>RD</td><td>no vat</td><td>ค่าอากรแสตมป์</td><td>80.00</td><td>0.00</td><td>80.00</td><td>Cash</td><td>Petty Cash</td><td>28/02/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>95</td><td>27/02/2023</td><td>กองกลาง</td><td>no Vat</td><td>ดอกเบี้ยเงินกู้ ด.2/66 (600,000*5.250%*14/365)</td><td>1,208.22</td><td>0.00</td><td>1,208.22</td><td></td><td>Withdraw Cash</td><td>28/02/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>96</td><td>27/02/2023</td><td>กองกลาง</td><td>no Vat</td><td>ดอกเบี้ยเงินกู้ ด.2/66 (150,000*5.250%*17/365)</td><td>366.78</td><td>0.00</td><td>366.78</td><td></td><td>Withdraw Cash</td><td>28/02/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>97</td><td>27/02/2023</td><td>เงินเดือน</td><td>no Vat</td><td>เงินเดือนพนักงาน ด.2/66</td><td>16,500.00</td><td>0.00</td><td>16,500.00</td><td></td><td>Withdraw Cash</td><td>28/02/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>98</td><td>28/02/2023</td><td>คุณเก๋</td><td>MSF</td><td>Toll way</td><td>5,000.00</td><td>0.00</td><td>5,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>10/03/2023</td><td>D070</td><td>เงินสด</td></tr>
+                    <tr><td>99</td><td>03/03/2023</td><td>บจ.พีเอส ประตูม้วน</td><td>Vat</td><td>ค่าประตูมอเตอร์ไฟฟ้า</td><td>36,000.00</td><td>2,520.00</td><td>38,520.00</td><td>Cash</td><td>Withdraw Cash</td><td>10/03/2023</td><td>D063</td><td>เงินสด</td></tr>
+                    <tr><td>100</td><td>03/03/2023</td><td>ช่าง</td><td>no vat</td><td>ค่าเปลี่ยนคอนโทรล</td><td>2,500.00</td><td>0.00</td><td>2,500.00</td><td>Cash</td><td>Withdraw Cash</td><td>10/03/2023</td><td>D063</td><td>เงินสด</td></tr>
+                    <tr><td>101</td><td>01/03/2023</td><td>คุณอาร์ต</td><td>MSF</td><td>Toll way</td><td>3,000.00</td><td>0.00</td><td>3,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>10/03/2023</td><td>D086</td><td>เงินสด</td></tr>
+                    <tr><td>102</td><td>06/02/2023</td><td>บจ.สยามมาสเตอร์ทุลส์</td><td>Vat</td><td>ค่าใบเจียรผ้าทรายซ้อน</td><td>785.05</td><td>54.95</td><td>840.00</td><td>Cash</td><td>Withdraw Cash</td><td>10/03/2023</td><td>D086</td><td>เงินสด</td></tr>
+                    <tr><td>103</td><td>06/02/2023</td><td>บจ.ท้อปแก๊ส ซีแอนด์ดับบลิว</td><td>Vat</td><td>ค่าอุปกรณ์</td><td>51,073.95</td><td>3,575.18</td><td>54,649.00</td><td>Cash</td><td>Withdraw Cash</td><td>10/03/2023</td><td>D086</td><td>เงินสด</td></tr>
+                    <tr><td>104</td><td>08/03/2023</td><td>คุณเหมย</td><td>no Vat</td><td>SSO (1,500) ด.2/66</td><td>1,500.00</td><td>0.00</td><td>1,500.00</td><td></td><td>Withdraw Cash</td><td>10/03/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>105</td><td>07/03/2023</td><td>คุณสุธี</td><td>MSF</td><td>ค่าบริหารจัดการ</td><td>30,000.00</td><td>0.00</td><td>30,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/03/2023</td><td>D042</td><td>เงินสด</td></tr>
+                    <tr><td>106</td><td>07/03/2023</td><td>คุณกอล์ฟ</td><td>MSF</td><td>Toll way</td><td>8,000.00</td><td>0.00</td><td>8,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/03/2023</td><td>D042</td><td>เงินสด</td></tr>
+                    <tr><td>107</td><td>07/03/2023</td><td>คุณโต</td><td>MSF</td><td>Toll way</td><td>5,000.00</td><td>0.00</td><td>5,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/03/2023</td><td>D042</td><td>เงินสด</td></tr>
+                    <tr><td>108</td><td>07/03/2023</td><td>คุณกอล์ฟ</td><td>MSF</td><td>Toll way</td><td>2,000.00</td><td>0.00</td><td>2,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/03/2023</td><td>D085</td><td>เงินสด</td></tr>
+                    <tr><td>109</td><td>07/03/2023</td><td>ร้านค้า</td><td>no Vat</td><td>ค่าชุดสาย high Pressure</td><td>41,816.00</td><td>0.00</td><td>41,816.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/03/2023</td><td>D085</td><td>เงินสด</td></tr>
+                    <tr><td>110</td><td>07/03/2023</td><td>คุณกอล์ฟ</td><td>MSF</td><td>ค่าบริหารจัดการ</td><td>20,000.00</td><td>0.00</td><td>20,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/03/2023</td><td>D057</td><td>เงินสด</td></tr>
+                    <tr><td>111</td><td>07/03/2023</td><td>ร้านค้า</td><td>no Vat</td><td>ค่าลูกปืน NSK</td><td>16,500.00</td><td>0.00</td><td>16,500.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/03/2023</td><td>D057</td><td>เงินสด</td></tr>
+                    <tr><td>112</td><td>07/03/2023</td><td>ร้านค้า</td><td>no Vat</td><td>ค่าชิ้นงานประกับราง</td><td>185,164.00</td><td>0.00</td><td>185,164.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/03/2023</td><td>D057</td><td>เงินสด</td></tr>
+                    <tr><td>113</td><td>07/03/2023</td><td>คุณเมย์</td><td>MSF</td><td>Toll way</td><td>2,000.00</td><td>0.00</td><td>2,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/03/2023</td><td>D080</td><td>เงินสด</td></tr>
+                    <tr><td>114</td><td>07/03/2023</td><td>คุณโดด</td><td>MSF</td><td>Toll way</td><td>1,500.00</td><td>0.00</td><td>1,500.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/03/2023</td><td>D080</td><td>เงินสด</td></tr>
+                    <tr><td>115</td><td>07/03/2023</td><td>ร้านค้า</td><td>no Vat</td><td>ค่าพาร์ทิชั่น</td><td>33,084.00</td><td>0.00</td><td>33,084.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/03/2023</td><td>D080</td><td>เงินสด</td></tr>
+                    <tr><td>116</td><td>07/03/2023</td><td>ร้านค้า</td><td>no Vat</td><td>ค่าชิ้นงาน ZXQ200-16</td><td>47,203.00</td><td>0.00</td><td>47,203.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/03/2023</td><td>D077</td><td>เงินสด</td></tr>
+                    <tr><td>117</td><td>22/02/2023</td><td>บจ.เฮง เฮง สตีล เทรดดิ้ง</td><td>no Vat</td><td>ค่าของ  ม้วนใยขัดสก็อตไบท์ </td><td>3,182.00</td><td>0.00</td><td>3,182.00</td><td>Ae</td><td>Petty Cash</td><td>15/03/2023</td><td>D095</td><td></td></tr>
+                    <tr><td>118</td><td>27/02/2023</td><td>บจ.ออฟฟิศเมท(ไทย)</td><td>Vat</td><td>ค่าอุปกรณ์ Office</td><td>774.77</td><td>54.23</td><td>829.00</td><td>Big</td><td>Petty Cash</td><td>15/03/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>119</td><td>24/02/2023</td><td>DBD</td><td>no Vat</td><td>ค่าคัดหนังสือรับรอง</td><td>650.00</td><td>0.00</td><td>650.00</td><td>Cash</td><td>Petty Cash</td><td>15/03/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>120</td><td>23/02/2023</td><td>บจ.ขอนแก่น เคเคเ เทรดดิ้ง</td><td>Vat</td><td>ค่าวัสดุ</td><td>1,177.57</td><td>82.43</td><td>1,260.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/03/2023</td><td>D070</td><td>เงินสด</td></tr>
+                    <tr><td>121</td><td>23/02/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่าส่งของ</td><td>60.00</td><td>0.00</td><td>60.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/03/2023</td><td>D070</td><td>เงินสด</td></tr>
+                    <tr><td>122</td><td>28/02/2023</td><td>บจ.บุญถาวรเซรามิค</td><td>no Vat</td><td>ค่า Sample บานพับ</td><td>299.00</td><td>0.00</td><td>299.00</td><td>Bo</td><td>Petty Cash</td><td>15/03/2023</td><td>D093</td><td></td></tr>
+                    <tr><td>123</td><td>07/03/2023</td><td>ร้านค้า</td><td>no Vat</td><td>ค่าของ (254,000)  ค่าจัดส่ง (4,000)</td><td>258,000.00</td><td>0.00</td><td>258,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>15/03/2023</td><td>D042</td><td>เงินสด</td></tr>
+                    <tr><td>124</td><td>20/02/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>15/03/2023</td><td>D063</td><td>ไปมักกะสัน งาน ติดตั้งประตูรีโมท ตามเรื่องซื้อ</td></tr>
+                    <tr><td>125</td><td>22/02/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>400.00</td><td>0.00</td><td>400.00</td><td>Bo</td><td>Petty Cash</td><td>15/03/2023</td><td>D040</td><td>ไปหัวลำโพง+มักกะสัน งาน เหล็กตัวที รับหัก ณ ที่จ่าย</td></tr>
+                    <tr><td>126</td><td>28/02/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>15/03/2023</td><td>D063</td><td>ไปมักกะสัน งาน ติดตั้งประตูรีโมท ตามเรื่องซื้อ</td></tr>
+                    <tr><td>127</td><td>01/03/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>15/03/2023</td><td>D063</td><td>ไปมักกะสัน งาน ติดตั้งประตูรีโมท พาช่างดูหน้างาน</td></tr>
+                    <tr><td>128</td><td>03/03/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>15/03/2023</td><td>D093</td><td>ไปมักกะสัน งาน บานพับประตูชาน ส่งใบเสนอราคา</td></tr>
+                    <tr><td>129</td><td>17/02/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>500.00</td><td>0.00</td><td>500.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/03/2023</td><td>D042</td><td>ไปมักกะสัน+หัวลำโพง งาน เครื่องมือวัด7รายการ ติดตามงาน</td></tr>
+                    <tr><td>130</td><td>20/02/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>500.00</td><td>0.00</td><td>500.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/03/2023</td><td>D081</td><td>ไปมักกะสัน+หัวลำโพง งาน พัดลมระบายอากาศ ดูเทคนิคเพิ่มเติม</td></tr>
+                    <tr><td>131</td><td>21/02/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/03/2023</td><td>D058</td><td>ไปมักกะสัน งาน เครื่องชาร์ทแบต  แก้ไขใบเสนอราคา</td></tr>
+                    <tr><td>132</td><td>22/02/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/03/2023</td><td>D092</td><td>ไปมักกะสัน งาน ชุด Statodyne ดู Spec เพิ่ม</td></tr>
+                    <tr><td>133</td><td>23/02/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/03/2023</td><td>D087</td><td>ไปมักกะสัน งาน จ้างเทพื้น ติดตามงาน</td></tr>
+                    <tr><td>134</td><td>24/02/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>450.00</td><td>0.00</td><td>450.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/03/2023</td><td>D080</td><td>ไปมักกะสัน+หัวลำโพง งาน พาร์ทิชั่น ติดตามเรื่องซื้อ</td></tr>
+                    <tr><td>135</td><td>27/02/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/03/2023</td><td>D076</td><td>ไปมักกะสัน งาน ประตูม้วน ติดตามงาน</td></tr>
+                    <tr><td>136</td><td>28/02/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>400.00</td><td>0.00</td><td>400.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/03/2023</td><td>D062</td><td>ไปมักกะสัน+หัวลำโพง งาน ประตูม้วนไฟฟ้า ตามใบจ่าย</td></tr>
+                    <tr><td>137</td><td>01/03/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/03/2023</td><td>D078</td><td>ไปมักกะสัน งาน Presure sensitive ส่งมอบงาน</td></tr>
+                    <tr><td>138</td><td>02/03/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>450.00</td><td>0.00</td><td>450.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/03/2023</td><td>D042</td><td>ไปมักกะสัน+หัวลำโพง งาน เครื่องมือวัด7รายการ ติดตามงาน</td></tr>
+                    <tr><td>139</td><td>03/03/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>500.00</td><td>0.00</td><td>500.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/03/2023</td><td>D085</td><td>ไปมักกะสัน+หัวลำโพง งาน สาย High Pressure ส่งใบยืนยันราคา</td></tr>
+                    <tr><td>140</td><td>06/03/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Jumbo</td><td>Petty Cash</td><td>15/03/2023</td><td>D058</td><td>ไปมักกะสัน งาน เครื่องชาร์ทแบต  ตามงาน</td></tr>
+                    <tr><td>141</td><td>21/02/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>15/03/2023</td><td>D070</td><td>ไปมักกะสัน งาน HID ฐาน Interlock รับตลลงซื้อ</td></tr>
+                    <tr><td>142</td><td>22/02/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>15/03/2023</td><td>D084</td><td>ไปมักกะสัน งาน ตู้เก็บเอกสาร ตามเรื่องซื้อ</td></tr>
+                    <tr><td>143</td><td>27/02/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>15/03/2023</td><td>D079</td><td>ไปมักกะสัน งาน พัดลมอุตสาหกรรม ตามเรื่องซื้อ</td></tr>
+                    <tr><td>144</td><td>28/02/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>15/03/2023</td><td>D086</td><td>ไปมักกะสัน งาน หัวตัด Plasma รับต่อรองราคา</td></tr>
+                    <tr><td>145</td><td>21/03/2023</td><td>RD</td><td>no Vat</td><td>ภ.พ.30 ด.2/66</td><td>1,026.20</td><td>0.00</td><td>1,026.20</td><td></td><td>Withdraw Cash</td><td>23/03/2023</td><td>D062</td><td></td></tr>
+                    <tr><td>146</td><td>21/03/2023</td><td>RD</td><td>no Vat</td><td>ภ.พ.30 ด.2/66</td><td>1,048.60</td><td>0.00</td><td>1,048.60</td><td></td><td>Withdraw Cash</td><td>23/03/2023</td><td>D071</td><td></td></tr>
+                    <tr><td>147</td><td>21/03/2023</td><td>RD</td><td>no Vat</td><td>ภ.พ.30 ด.2/66</td><td>312.90</td><td>0.00</td><td>312.90</td><td></td><td>Withdraw Cash</td><td>23/03/2023</td><td>D095</td><td></td></tr>
+                    <tr><td>148</td><td>21/03/2023</td><td>คุณเหมย</td><td>no Vat</td><td>ค่าธรรมเนียมโอน</td><td>15.00</td><td>0.00</td><td>15.00</td><td></td><td>Withdraw Cash</td><td>23/03/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>149</td><td>16/03/2023</td><td>ร้านค้า</td><td>no vat</td><td>ค่าอุปกรณ์ซ่อม</td><td>32,670.00</td><td>0.00</td><td>32,670.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D100</td><td>เงินสด</td></tr>
+                    <tr><td>150</td><td>16/03/2023</td><td>บจ.กราเวียร์ เทค</td><td>no vat</td><td>ค่าแผ่นอะคริลิค</td><td>11,128.00</td><td>0.00</td><td>11,128.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D097</td><td>เงินสด</td></tr>
+                    <tr><td>151</td><td>16/03/2023</td><td>Electronic Components</td><td>no Vat</td><td>ค่าตัวถอดพิน</td><td>1,000.00</td><td>0.00</td><td>1,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D099</td><td>เงินสด</td></tr>
+                    <tr><td>152</td><td>16/03/2023</td><td>บจ.พีวายเอส  สปริง</td><td>Vat</td><td>ค่าแผ่นยึดคอยล์</td><td>16,800.00</td><td>1,176.00</td><td>17,976.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D090</td><td>เงินสด</td></tr>
+                    <tr><td>153</td><td>16/03/2023</td><td>ร้านค้า</td><td>no Vat</td><td>ค่าของ  25 รายการ</td><td>189,270.00</td><td>0.00</td><td>189,270.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D096</td><td>เงินสด</td></tr>
+                    <tr><td>154</td><td>15/03/2023</td><td>คุณนุพันธุ</td><td>MSF</td><td>Toll way</td><td>2,000.00</td><td>0.00</td><td>2,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D093</td><td>เงินสด</td></tr>
+                    <tr><td>155</td><td>15/03/2023</td><td>คุณเล็ก</td><td>MSF</td><td>Toll way</td><td>500.00</td><td>0.00</td><td>500.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D093</td><td>เงินสด</td></tr>
+                    <tr><td>156</td><td>15/03/2023</td><td>คุณโอ๊ต</td><td>MSF</td><td>Toll way</td><td>3,000.00</td><td>0.00</td><td>3,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D093</td><td>เงินสด</td></tr>
+                    <tr><td>157</td><td>15/03/2023</td><td>คุณโต้งและคุณไม้</td><td>MSF</td><td>Toll way</td><td>1,000.00</td><td>0.00</td><td>1,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D093</td><td>เงินสด</td></tr>
+                    <tr><td>158</td><td>15/03/2023</td><td>คุณอู๋</td><td>MSF</td><td>Toll way</td><td>3,000.00</td><td>0.00</td><td>3,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D063</td><td>เงินสด</td></tr>
+                    <tr><td>159</td><td>15/03/2023</td><td>คุณไชยเลิศ</td><td>MSF</td><td>Toll way</td><td>2,000.00</td><td>0.00</td><td>2,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D063</td><td>เงินสด</td></tr>
+                    <tr><td>160</td><td>15/03/2023</td><td>คุณเดี่ยว</td><td>MSF</td><td>Toll way</td><td>1,500.00</td><td>0.00</td><td>1,500.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D063</td><td>เงินสด</td></tr>
+                    <tr><td>161</td><td>15/03/2023</td><td>ช่าง</td><td>MSF</td><td>Toll way</td><td>1,000.00</td><td>0.00</td><td>1,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D063</td><td>เงินสด</td></tr>
+                    <tr><td>162</td><td>15/03/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่าจ้างรื้อ ถอน </td><td>2,000.00</td><td>0.00</td><td>2,000.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D063</td><td>เงินสด</td></tr>
+                    <tr><td>163</td><td>15/03/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่าเทพื้นฐานประตู</td><td>3,500.00</td><td>0.00</td><td>3,500.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D063</td><td>เงินสด</td></tr>
+                    <tr><td>164</td><td>15/03/2023</td><td>SRT</td><td>no Vat</td><td>เงินสดค้ำประกัน</td><td>4,775.00</td><td>0.00</td><td>4,775.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D063</td><td>เงินสด</td></tr>
+                    <tr><td>165</td><td>10/03/2023</td><td>มนต์สินี</td><td>no Vat</td><td>เลี้ยงรับรองลูกค้า</td><td>40.00</td><td>0.00</td><td>40.00</td><td>Ying</td><td>Petty Cash</td><td>28/03/2023</td><td>D050</td><td></td></tr>
+                    <tr><td>166</td><td>15/03/2023</td><td>ร้านค้า</td><td>no Vat</td><td>ค่าบานพับ  103 ชุด (309 ตัว)</td><td>30,797.00</td><td>0.00</td><td>30,797.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D093</td><td>เงินสด</td></tr>
+                    <tr><td>167</td><td>15/03/2023</td><td>SRT</td><td>no Vat</td><td>เงินสดค้ำประกัน</td><td>4,976.00</td><td>0.00</td><td>4,976.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D093</td><td>เงินสด</td></tr>
+                    <tr><td>168</td><td>07/03/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>28/03/2023</td><td>D093</td><td>ไปมักกะสัน งานบานพับประตูชาน ส่งใบเสนอราคา</td></tr>
+                    <tr><td>169</td><td>10/03/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>280.00</td><td>0.00</td><td>280.00</td><td>Bo</td><td>Petty Cash</td><td>28/03/2023</td><td>D093</td><td>ไปมักกะสัน งานบานพับประตูชาน ตามเรื่องซื้อ</td></tr>
+                    <tr><td>170</td><td>13/03/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>28/03/2023</td><td>D073</td><td>ไปมักกะสัน งาน เหล็กเหนียวแผ่น คุยเรื่องราคาและ spec</td></tr>
+                    <tr><td>171</td><td>14/03/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>28/03/2023</td><td>D071</td><td>ไปมักกะสัน งาน ตู้เอกสารบานเลื่อน นัดตรวจรับ</td></tr>
+                    <tr><td>172</td><td>07/03/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Jumbo</td><td>Petty Cash</td><td>28/03/2023</td><td>D088</td><td>ไปมักกะสัน งาน จ้างซ่อมใบพัด ติดตามงาน</td></tr>
+                    <tr><td>173</td><td>08/03/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Jumbo</td><td>Petty Cash</td><td>28/03/2023</td><td>D090</td><td>ไปมักกะสัน งาน แผ่นยึดคอยล์ คุยเรื่อง Spec</td></tr>
+                    <tr><td>174</td><td>09/03/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>500.00</td><td>0.00</td><td>500.00</td><td>Jumbo</td><td>Petty Cash</td><td>28/03/2023</td><td>D092</td><td>ไปมักกะสัน+หัวลำโพง งาน ชุด Statodyne คุยเรื่อง Spec</td></tr>
+                    <tr><td>175</td><td>10/03/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Jumbo</td><td>Petty Cash</td><td>28/03/2023</td><td>D098</td><td>ไปมักกะสัน งาน ซื้อเครื่องมืออเนกประสงค์ ติดตามงาน</td></tr>
+                    <tr><td>176</td><td>14/03/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Jumbo</td><td>Petty Cash</td><td>28/03/2023</td><td>D099</td><td>ไปมักกะสัน งาน ซื่อเครื่องมือถอดพิน ติดตามงาน</td></tr>
+                    <tr><td>177</td><td>15/03/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>450.00</td><td>0.00</td><td>450.00</td><td>Jumbo</td><td>Petty Cash</td><td>28/03/2023</td><td>D076</td><td>ไปมักกะสัน+หัวลำโพง งานประตูม้วนโรงรถจักรส่วนล่าง ติดตามเรื่องซื้อ</td></tr>
+                    <tr><td>178</td><td>02/03/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>28/03/2023</td><td>D028</td><td>ไปมักกะสัน งาน CSR ชุดซ่อมประเก็นยางตู้ไดนามิก พบ วฟฟ.</td></tr>
+                    <tr><td>179</td><td>08/03/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>28/03/2023</td><td>D028</td><td>ไปมักกะสัน งาน CSR ชุดซ่อมประเก็นยางตู้ไดนามิก พบ วฟฟ.</td></tr>
+                    <tr><td>180</td><td>10/03/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>28/03/2023</td><td>D070</td><td>ไปมักกะสัน งาน HID ฐาน Interlock ส่งของ</td></tr>
+                    <tr><td>181</td><td>15/03/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>280.00</td><td>0.00</td><td>280.00</td><td>Ying</td><td>Petty Cash</td><td>28/03/2023</td><td>D028</td><td>ไปมักกะสัน งาน CSR ชุดซ่อมประเก็นยางตู้ไดนามิก พบ วฟฟ.</td></tr>
+                    <tr><td>182</td><td>25/03/2023</td><td>เงินเดือน</td><td>no Vat</td><td>เงินเดือนพนักงาน ด.3/66</td><td>16,500.00</td><td>0.00</td><td>16,500.00</td><td></td><td>Withdraw Cash</td><td>28/03/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>183</td><td>27/03/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่าคอมมิชชั่น งานจัดซื้อเหล็กตัวที#1  #1/1</td><td>950.16</td><td>0.00</td><td>950.16</td><td>Bo</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D040</td><td></td></tr>
+                    <tr><td>184</td><td>27/03/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่าคอมมิชชั่น งานเซตตี้เบล#1  #1/1</td><td>770.40</td><td>0.00</td><td>770.40</td><td>Jumbo</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D064</td><td></td></tr>
+                    <tr><td>185</td><td>27/03/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่าคอมมิชชั่น งานHID เบรกเกอร์พร้อมอุปกรณ์#1  #1/1</td><td>1,460.55</td><td>0.00</td><td>1,460.55</td><td>Jumbo</td><td>Withdraw Cash</td><td>28/03/2023</td><td>D043</td><td></td></tr>
+                    <tr><td>186</td><td>27/03/2023</td><td>กองกลาง</td><td>no Vat</td><td>ดอกเบี้ยเงินกู้ ด.3/66 (750,000*5.250%*15/365)</td><td>1,618.15</td><td>0.00</td><td>1,618.15</td><td></td><td>Withdraw Cash</td><td>28/03/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>187</td><td>27/03/2023</td><td>กองกลาง</td><td>no Vat</td><td>ดอกเบี้ยเงินกู้ ด.3/66 (650,000*5.250%*13/365)</td><td>1,215.41</td><td>0.00</td><td>1,215.41</td><td></td><td>Withdraw Cash</td><td>28/03/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>188</td><td>31/01/2023</td><td>KTB</td><td>no Vat</td><td>LG Fee Per.#2 ต่ออายุ 12 เดือน (1,691*2%) (26/1/23-26/1/24)  จ่ายขั้นต่ำ</td><td>500.00</td><td>0.00</td><td>500.00</td><td></td><td>Withdraw Cash</td><td>31/01/2023</td><td>D024</td><td></td></tr>
+                    <tr><td>189</td><td>24/03/2023</td><td>มนต์สินี</td><td>no Vat</td><td>เลี้ยงรับรองลูกค้า</td><td>105.00</td><td>0.00</td><td>105.00</td><td>Ying</td><td>Petty Cash</td><td>12/04/2023</td><td>D101</td><td></td></tr>
+                    <tr><td>190</td><td>27/03/2023</td><td>D&E อีเล็คทรอนิคส์</td><td>no Vat</td><td>ค่าอะไหล่</td><td>124.00</td><td>0.00</td><td>124.00</td><td>Cash</td><td>Withdraw Cash</td><td>12/04/2023</td><td>D101</td><td>เงินสด</td></tr>
+                    <tr><td>191</td><td>30/03/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่า PCB</td><td>50.00</td><td>0.00</td><td>50.00</td><td>Cash</td><td>Withdraw Cash</td><td>12/04/2023</td><td>D101</td><td>เงินสด</td></tr>
+                    <tr><td>192</td><td>14/03/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่าน็อตเพิ่ม</td><td>720.00</td><td>0.00</td><td>720.00</td><td>Cash</td><td>Withdraw Cash</td><td>12/04/2023</td><td>D070</td><td>เงินสด</td></tr>
+                    <tr><td>193</td><td>20/03/2023</td><td>บจ.อ.บุญประเสริฐอิมปอร์ต</td><td>Vat</td><td>ค่าสกูรหัวกลมผ่า </td><td>310.00</td><td>21.70</td><td>332.00</td><td>Cash</td><td>Withdraw Cash</td><td>12/04/2023</td><td>D070</td><td>เงินสด</td></tr>
+                    <tr><td>194</td><td>23/02/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่าน็อต</td><td>492.00</td><td>0.00</td><td>492.00</td><td>Cash</td><td>Withdraw Cash</td><td>12/04/2023</td><td>D070</td><td>เงินสด</td></tr>
+                    <tr><td>195</td><td>03/03/2023</td><td>บจ.เอส ซี เยนเนอรัล ซัพพลาย</td><td>Vat</td><td>ค่าSampleหัวกระโลก  1 ชุด</td><td>690.00</td><td>48.30</td><td>738.00</td><td>Cash</td><td>Withdraw Cash</td><td>12/04/2023</td><td>D050</td><td>เงินสด</td></tr>
+                    <tr><td>196</td><td>18/03/2023</td><td>บจ.เอส ซี เยนเนอรัล ซัพพลาย</td><td>Vat</td><td>ค่าSampleหัวกระโลก  แก้ไข  1 ชุด</td><td>690.00</td><td>48.30</td><td>738.00</td><td>Cash</td><td>Withdraw Cash</td><td>12/04/2023</td><td>D050</td><td>เงินสด</td></tr>
+                    <tr><td>197</td><td>03/03/2023</td><td>บจ.เอส ซี เยนเนอรัล ซัพพลาย</td><td>no Vat</td><td>ค่าส่งของ</td><td>100.00</td><td>0.00</td><td>100.00</td><td>Cash</td><td>Withdraw Cash</td><td>12/04/2023</td><td>D050</td><td>เงินสด</td></tr>
+                    <tr><td>198</td><td>18/03/2023</td><td>บจ.เอส ซี เยนเนอรัล ซัพพลาย</td><td>no Vat</td><td>ค่าส่งของ</td><td>100.00</td><td>0.00</td><td>100.00</td><td>Cash</td><td>Withdraw Cash</td><td>12/04/2023</td><td>D050</td><td>เงินสด</td></tr>
+                    <tr><td>199</td><td>17/03/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>280.00</td><td>0.00</td><td>280.00</td><td>Bo</td><td>Petty Cash</td><td>12/04/2023</td><td>D071</td><td>ไปมักกะสัน งาน ตู้เอกสารบานเลื่อน ตามตรวจรับ</td></tr>
+                    <tr><td>200</td><td>20/03/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>12/04/2023</td><td>D093</td><td>ไปมักกะสัน งาน แผ่นพับประตูชาน ตามเรื่องซื้อ</td></tr>
+                    <tr><td>201</td><td>24/03/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>280.00</td><td>0.00</td><td>280.00</td><td>Bo</td><td>Petty Cash</td><td>12/04/2023</td><td>D094</td><td>ไปมักกะสัน งาน HID แผ่น LC-3 พบนายตรวจโดด แจ้งเรื่องชิ้นงาน</td></tr>
+                    <tr><td>202</td><td>27/03/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>12/04/2023</td><td>D071</td><td>ไปมักกะสัน งาน ตู้เอกสารบานเลื่อน ตามตรวจรับ</td></tr>
+                    <tr><td>203</td><td>31/03/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>280.00</td><td>0.00</td><td>280.00</td><td>Bo</td><td>Petty Cash</td><td>12/04/2023</td><td>D093</td><td>ไปมักกะสัน งาน แผ่นพับประตูชาน ตามเรื่องซื้อ</td></tr>
+                    <tr><td>204</td><td>22/03/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>12/04/2023</td><td>D028</td><td>ไปมักกะสัน งาน ประเก็นยาง พบ วฟฟ.</td></tr>
+                    <tr><td>205</td><td>23/03/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>12/04/2023</td><td>D101</td><td>ไปมักกะสัน งาน HID Buzzer สัญญาณเดือนคนขับ พบคุณอยุธยา</td></tr>
+                    <tr><td>206</td><td>28/03/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>12/04/2023</td><td>D084</td><td>ไปมักกะสัน งาน ตู้เก็บเอกสาร ตามเรื่องซื้อ</td></tr>
+                    <tr><td>207</td><td>31/03/2023</td><td>นวรัตน์</td><td>no Vat</td><td>เลี้ยงรับรองลูกค้า</td><td>170.00</td><td>0.00</td><td>170.00</td><td>Bo</td><td>Petty Cash</td><td>12/04/2023</td><td>D093</td><td></td></tr>
+                    <tr><td>208</td><td>01/04/2023</td><td>บจ.เอส ซี เยนเนอรัล ซัพพลาย</td><td>Vat</td><td>ค่าของ</td><td>6,900.00</td><td>483.00</td><td>7,383.00</td><td>Cash</td><td>Withdraw Cash</td><td>12/04/2023</td><td>D050</td><td>เงินสด</td></tr>
+                    <tr><td>209</td><td>04/04/2023</td><td>บจ.เอส ซี เยนเนอรัล ซัพพลาย</td><td>no Vat</td><td>ค่าส่งของ</td><td>150.00</td><td>0.00</td><td>150.00</td><td>Cash</td><td>Withdraw Cash</td><td>12/04/2023</td><td>D050</td><td>เงินสด</td></tr>
+                    <tr><td>210</td><td>10/04/2023</td><td>คุณเหมย</td><td>no Vat</td><td>SSO (1,500) ด.3/66</td><td>1,500.00</td><td>0.00</td><td>1,500.00</td><td></td><td>Withdraw Cash</td><td>12/04/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>211</td><td>19/04/2023</td><td>RD</td><td>no Vat</td><td>ภ.พ.30 ด.3/66</td><td>2,507.08</td><td>0.00</td><td>2,507.08</td><td></td><td>Withdraw Cash</td><td>21/04/2023</td><td>D078</td><td></td></tr>
+                    <tr><td>212</td><td>19/04/2023</td><td>RD</td><td>no Vat</td><td>ภ.พ.30 ด.3/66</td><td>4,218.37</td><td>0.00</td><td>4,218.37</td><td></td><td>Withdraw Cash</td><td>21/04/2023</td><td>D070</td><td></td></tr>
+                    <tr><td>213</td><td>19/04/2023</td><td>RD</td><td>no Vat</td><td>ภ.พ.30 ด.3/66</td><td>2,118.29</td><td>0.00</td><td>2,118.29</td><td></td><td>Withdraw Cash</td><td>21/04/2023</td><td>D086</td><td></td></tr>
+                    <tr><td>214</td><td>19/04/2023</td><td>คุณเหมย</td><td>no Vat</td><td>ค่าธรรมเนียมโอน</td><td>15.00</td><td>0.00</td><td>15.00</td><td></td><td>Withdraw Cash</td><td>21/04/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>215</td><td>20/04/2023</td><td>หจก.อ.บุญประเสริฐอิมปอร์ต</td><td>Vat</td><td>ค่าชุดน็อต</td><td>698.76</td><td>48.91</td><td>748.00</td><td>Cash</td><td>Withdraw Cash</td><td>28/04/2023</td><td>D050</td><td>เงินสด</td></tr>
+                    <tr><td>216</td><td>20/04/2023</td><td>มนต์สินี</td><td>no Vat</td><td>เลี้ยงรับรองลูกค้า</td><td>145.00</td><td>0.00</td><td>145.00</td><td>Ying</td><td>Petty Cash</td><td>28/04/2023</td><td>D104</td><td></td></tr>
+                    <tr><td>217</td><td>20/04/2023</td><td>บมจ.ออฟฟิศเมท</td><td>no Vat</td><td>ค่าอุปกรณ์ Office</td><td>480.00</td><td>0.00</td><td>480.00</td><td>Nort</td><td>Petty Cash</td><td>28/04/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>218</td><td>03/04/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>00/01/1900</td><td>D063</td><td>ไปมักกะสัน งาน ติดตั้งประตูมอเตอร์ไฟฟ้า พบคุณอู๋คุยเรื่อง statusงานนี้</td></tr>
+                    <tr><td>219</td><td>10/04/2023</td><td>นวรัตน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Bo</td><td>Petty Cash</td><td>00/01/1900</td><td>D093</td><td>ไปมักกะสัน งาน บานพับประตูชาน คุยเรื่องราคา</td></tr>
+                    <tr><td>220</td><td>04/04/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>400.00</td><td>0.00</td><td>400.00</td><td>Jumbo</td><td>Petty Cash</td><td>00/01/1900</td><td>D042</td><td>ไปมักกะสัน+หัวลำโพง งานเครื่องมือวัด7รายการ ติดตามเรื่องซื้อ</td></tr>
+                    <tr><td>221</td><td>05/04/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>450.00</td><td>0.00</td><td>450.00</td><td>Jumbo</td><td>Petty Cash</td><td>00/01/1900</td><td>D076</td><td>ไปมักกะสัน+หัวลำโพง งานประตูม้วนโรงรถจักรส่วนล่าง ส่งใบต่อรองราคา</td></tr>
+                    <tr><td>222</td><td>07/04/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>280.00</td><td>0.00</td><td>280.00</td><td>Jumbo</td><td>Petty Cash</td><td>00/01/1900</td><td>D077</td><td>ไปมักกะสัน งานRectifier Module ติดตามงาน</td></tr>
+                    <tr><td>223</td><td>10/04/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>500.00</td><td>0.00</td><td>500.00</td><td>Jumbo</td><td>Petty Cash</td><td>00/01/1900</td><td>D081</td><td>ไปมักกะสัน+หัวลำโพง งานพัดลมระบายอากาศ ติดตามแก้ไขSpec</td></tr>
+                    <tr><td>224</td><td>11/04/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Jumbo</td><td>Petty Cash</td><td>00/01/1900</td><td>D087</td><td>ไปมักกะสัน งานจ้างเทพื้น แก้ไข BOQ หน้างาน</td></tr>
+                    <tr><td>225</td><td>07/04/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>400.00</td><td>0.00</td><td>400.00</td><td>Ying</td><td>Petty Cash</td><td>00/01/1900</td><td>D101</td><td>ไปหัวลำโพง+มักกะสัน งานHID Buzzer update กับนายตรวจ</td></tr>
+                    <tr><td>226</td><td>10/04/2023</td><td>มนต์สินี</td><td>no Vat</td><td>ค่ารถ+ค่าทางด่วน</td><td>230.00</td><td>0.00</td><td>230.00</td><td>Ying</td><td>Petty Cash</td><td>00/01/1900</td><td>D069</td><td>ไปมักกะสัน งานชั้นลอยโรงรถจักรส่วนบน สอบ. ตามเรื่องซื้อ</td></tr>
+                    <tr><td>227</td><td>25/04/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่าคอมมิชชั่น งานเครื่องอัดไฮดรอลิก #1/1</td><td>500.00</td><td>0.00</td><td>500.00</td><td>Jumbo</td><td>Withdraw Cash</td><td>28/04/2023</td><td>D061</td><td></td></tr>
+                    <tr><td>228</td><td>25/04/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่าคอมมิชชั่น งานประตูม้วนไฟฟ้า #1/1</td><td>1,500.00</td><td>0.00</td><td>1,500.00</td><td>Jumbo</td><td>Withdraw Cash</td><td>28/04/2023</td><td>D062</td><td></td></tr>
+                    <tr><td>229</td><td>25/04/2023</td><td>ปิยทัศน์</td><td>no Vat</td><td>ค่าคอมมิชชั่น งานHID NutเกลียวNF #1/1</td><td>500.00</td><td>0.00</td><td>500.00</td><td>Jumbo</td><td>Withdraw Cash</td><td>28/04/2023</td><td>D075</td><td></td></tr>
+                    <tr><td>230</td><td>25/04/2023</td><td>กองกลาง</td><td>no Vat</td><td>ดอกเบี้ยเงินกู้ ด.4/66 (1,400,000*5.250%*10/365)</td><td>2,013.70</td><td>0.00</td><td>2,013.70</td><td></td><td>Withdraw Cash</td><td>28/04/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>231</td><td>25/04/2023</td><td>กองกลาง</td><td>no Vat</td><td>ดอกเบี้ยเงินกู้ ด.4/66 (1,650,000*5.250%*21/365)</td><td>4,983.90</td><td>0.00</td><td>4,983.90</td><td></td><td>Withdraw Cash</td><td>28/04/2023</td><td>Share</td><td></td></tr>
+                    <tr><td>232</td><td>25/04/2023</td><td>เงินเดือน</td><td>no Vat</td><td>เงินเดือนพนักงาน ด.3/66</td><td>16,500.00</td><td>0.00</td><td>16,500.00</td><td></td><td>Withdraw Cash</td><td>28/04/2023</td><td>Share</td><td></td></tr>                    
+                </tbody>
+                <tfoot>
+                  <!-- <tr>
+                    <th>Project No</th>
+                    <th>Project</th>
+                    <th>Expense</th>
+                    <th>Remaining</th>
+                    <th>Created Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr> -->
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/lib/DataTables/datatables.min.js"></script>
+
+
+
+</body>
+
+</html>

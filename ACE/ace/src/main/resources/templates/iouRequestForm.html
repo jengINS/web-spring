@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico" />
+
+  <title>A.C.E. Parts Co., Ltd.</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+  <link rel="stylesheet" href="../custom.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js"
+    integrity="sha512-lDL6DD6x4foKuSTkRUKIMQJAoisDeojVPXknggl4fZWMr2/M/hMiKLs6sqUvxP/T2zXdrDMbLJ0/ru8QSZrnoQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <style>
+    .list-group-item {
+      /* border: 1px solid rgba(255, 255, 255, 1) !important; */
+    }
+  </style>
+  <script>
+    $(function () {
+      $("#nav-placeholder").load("navbar");
+    });
+  </script>
+</head>
+
+<body>
+  <div th:replace="navbar :: navbar"></div>
+
+  <div class="container-fluid">
+    <div class="row p-3">
+      <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12">
+        <div class="card bg-dark text-white">
+          <div class="card-body" style="background-color: rgba(0, 0, 0, 0.3);">
+            <div class="d-flex flex-column">
+              <h5><i class="bi bi-clipboard2-check"></i> IOU</h5>
+            </div>
+            <ul class="menu-list flex-grow-1 mt-3 list-unstyled">
+              <li class="collapsed">
+                <a class="m-link active" data-bs-toggle="collapse" data-bs-target="#dashboard-Components" href="IOUManagement">
+                  <i class="icofont-home fs-5"></i> <span>IOU Management</span> <span
+                    class="arrow icofont-dotted-down ms-auto text-end fs-5"></span></a>
+                <!-- Menu: Sub menu ul -->
+                <ul class="sub-menu collapse show" id="dashboard-Components">
+                  <li><a class="ms-link" href="iouRequestForm">
+                      <span>IOU Request Form</span></a></li>
+                   <li><a class="ms-link" href="iouTravel">
+                      <span>IOU Travel Form</span></a></li>      
+                  <li><a class="ms-link" href="iouView">
+                      <span>IOU Review</span></a></li>
+                  <li><a class="ms-link" href="iouAppove">
+                      <span>IOU Approve</span></a></li>
+                  <li><a class="ms-link" href="#">
+                      <span>IOU Configuration</span></a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+        <div class="card w-100 h-100">
+          <div class="card-body">
+            <form>
+              <div class="form-group row">
+                <label class="col-2">Payment Type :</label>
+                <div class="col-6">
+                  <div class="form-check form-check-inline" autocomplete="off">
+                    <input name="radio" id="radio_0" type="radio" required="required" class="form-check-input" value="1"
+                      checked="checked">
+                    <label for="radio_0" class="form-check-label">ค่า IOU/ค่า Advance อื่นๆ</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input name="radio" id="radio_1" type="radio" required="required" class="form-check-input"
+                      value="2">
+                    <label for="radio_1" class="form-check-label">ค่าบริหารจัดการ Supplier</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input name="radio" id="radio_2" type="radio" required="required" class="form-check-input"
+                      value="3">
+                    <label for="radio_2" class="form-check-label">Urgent</label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2"></label>
+                <div class="col-3">
+                  <label for="requestDate">วันที่เบิก</label>
+                  <input id="requestDate" name="requestDate" type="date" class="form-control" required="required">
+                </div>
+                <div class="col-3">
+                  <label for="requestDate">วันที่จ่าย</label>
+                  <input id="payDate" name="payDate" type="date" class="form-control" required="required">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2"></label> 
+                <div class="col-6">
+                  <div class="custom-control custom-checkbox custom-control-inline">
+                    <input name="iouCycle" id="iouCycle_0" type="checkbox" class="custom-control-input" value="1"> 
+                    <label for="iouCycle_0" class="custom-control-label">ใช้วันจ่ายตามรอบ IOU (วันจ่ายตามรอบ Supplier ตรงกับรอบ IOU)</label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row mt-5">
+                <label for="projectNo" class="col-2 col-form-label">Project No. :</label>
+                <div class="col-6">
+                  <select id="projectNo" name="projectNo" required="required" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="date" class="col-2 col-form-label">Date</label>
+                <div class="col-3">
+                  <input id="date" name="date" type="date" required="required" class="form-control">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="select1" class="col-2 col-form-label">Type</label>
+                <div class="col-6">
+                  <select id="select1" name="select1" class="form-control" required="required">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="description" class="col-2 col-form-label">Description</label>
+                <div class="col-6">
+                  <input id="description" name="description" type="text" class="form-control">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="amount" class="col-2 col-form-label">Amount</label>
+                <div class="col-6">
+                  <div class="input-group">
+                    <input id="amount" name="amount" type="text" class="form-control">
+                    <div class="input-group-append">
+                      <div class="input-group-text">BATH</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2"></label>
+                <div class="col-6">
+                  <div class="form-check form-check-inline">
+                    <input name="radio1" id="radio1_0" type="radio" class="form-check-input" value="VAT"
+                      required="required">
+                    <label for="radio1_0" class="form-check-label">VAT</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input name="radio1" id="radio1_1" type="radio" class="form-check-input" value="WHT"
+                      required="required">
+                    <label for="radio1_1" class="form-check-label">WHT</label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2"></label>
+                <div class="col-6">
+                  <div class="form-check form-check-inline">
+                    <input name="typePayment" id="typePayment_0" type="radio" class="form-check-input" value="1"
+                      required="required">
+                    <label for="typePayment_0" class="form-check-label">มี BOQ</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input name="typePayment" id="typePayment_1" type="radio" class="form-check-input" value="2"
+                      required="required">
+                    <label for="typePayment_1" class="form-check-label">หัก Supplier</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input name="typePayment" id="typePayment_2" type="radio" class="form-check-input" value="3"
+                      required="required">
+                    <label for="typePayment_2" class="form-check-label">ไม่มี BOQ</label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2"></label>
+                <div class="col-6">
+                  <div class="form-check form-check-inline">
+                    <input name="type2" id="type2_0" type="radio" class="form-check-input" value="1">
+                    <label for="type2_0" class="form-check-label">ค่าของ</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input name="type2" id="type2_1" type="radio" class="form-check-input" value="2">
+                    <label for="type2_1" class="form-check-label">ค่าแรง</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input name="type2" id="type2_2" type="radio" class="form-check-input" value="3">
+                    <label for="type2_2" class="form-check-label">MSF</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input name="type2" id="type2_3" type="radio" class="form-check-input" value="4">
+                    <label for="type2_3" class="form-check-label">อื่นๆ</label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="bill" class="col-2 col-form-label">Bill</label>
+                <div class="col-6">
+                  <select id="bill" name="bill" class="form-control" required="required">
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="paymentMethod" class="col-2 col-form-label">Payment Method</label>
+                <div class="col-6">
+                  <select id="paymentMethod" name="paymentMethod" class="form-control" required="required">
+                    <option value=""></option>
+                    <option value="1">Cash</option>
+                    <option value="2">Bank</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="paymentMethod" class="col-2 col-form-label">Upload Invoices</label>
+                <div class="col-6">
+                  <input type="file" name="" id="" accept=".jpg, .png" multiple required>
+                </div>
+              </div>
+              <div class="form-group row mt-4">
+                <div class="offset-2 col-6">
+                  <button name="submit" type="submit" class="btn btn-primary">บันทึก</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

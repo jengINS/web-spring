@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico" />
+
+  <title>A.C.E. Parts Co., Ltd.</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+  <link rel="stylesheet" href="../static/custom.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js"
+    integrity="sha512-lDL6DD6x4foKuSTkRUKIMQJAoisDeojVPXknggl4fZWMr2/M/hMiKLs6sqUvxP/T2zXdrDMbLJ0/ru8QSZrnoQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+  <style>
+    .list-group-item {
+      /* border: 1px solid rgba(255, 255, 255, 1) !important; */
+    }
+  </style>
+  <script>
+    $(function () {
+      $("#nav-placeholder").load("navbar.html");
+      $("#sidenav-placeholder").load("reportSideNav.html");
+    });
+  </script>
+</head>
+
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="container-fluid">
+    <div class="row p-3">
+      <div id="sidenav-placeholder" class="col-xl-2 col-lg-2 col-md-12 col-sm-12"></div>
+      <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+        <div class="row">
+            <div class="col-12 mb-3">
+              <div class="card w-100 h-100">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                      <h5>Project name</h5>
+                      <select class="form-control" name="project" id="project" required>
+                        <option value="0" selected>All active project</option>
+                        <option value="1">Project 0001</option>
+                        <option value="2">Project 0002</option>
+                        <option value="3">Project 0003</option>
+                      </select>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                      <h5>Group data</h5>
+                      <select class="form-control" name="period" id="period" required>
+                        <option value="1" selected>Month</option>
+                        <option value="2">Quarter</option>
+                        <option value="3">Year</option>
+                      </select>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 d-flex align-items-end">
+                        <button type="button" class="btn btn-primary btn-block" onclick="search()">Search</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-12 mb-3">
+              <div class="card w-100 h-100">
+                <div class="card-body">
+                  <canvas id="tranasctionsChart"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-12 mb-3">
+              <div class="card w-100 h-100">
+                <div class="card-body">
+                  <canvas id="profitChart"></canvas>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    new Choices('#project',{
+        itemSelectText: ''
+    });
+   new Choices('#period',{
+        itemSelectText: '',
+        searchEnabled: false
+    });
+    var canvas = document.getElementById('tranasctionsChart');
+    var canvas1 = document.getElementById('profitChart');
+    var ctx = canvas.getContext('2d');
+    var ctx1 = canvas1.getContext('2d');
+
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    var expenseData = getRandomData(-1);
+    var incomeData = getRandomData(1);
+    var profitData = getRandomData(1);
+    var vatData = getRandomData(1, 100);
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: months,
+        datasets: [
+          {
+            label: 'Income',
+            data: incomeData,
+            backgroundColor: '#36a2ebaa',
+            borderWidth: 4,
+            borderColor: '#36a2eb',
+            borderRadius: 24,
+            borderSkipped: false,
+          },
+          {
+            label: 'Expense',
+            data: expenseData,
+            backgroundColor: '#ff6384aa',
+            borderWidth: 4,
+            borderColor: '#ff6384',
+            borderRadius: 24,
+            borderSkipped: false,
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Incomes & Expenses',
+          },
+        },
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+
+    new Chart(ctx1, {
+      type: 'line',
+      data: {
+        labels: months,
+        datasets: [
+          {
+            label: 'Profit',
+            data: profitData,
+            backgroundColor: '#36a2ebaa',
+            borderColor: '#36a2eb',
+            yAxisID: 'y',
+          },
+          {
+            label: 'Tax',
+            data: vatData,
+            backgroundColor: '#ff6384aa',
+            borderColor: '#ff6384',
+            yAxisID: 'y1',
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Profits & Taxes',
+          },
+        },
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Profit',
+            },
+            stacked: true,
+            beginAtZero: true,
+            position: 'left',
+          },
+          y1: {
+            title: {
+              display: true,
+              text: 'Tax',
+            },
+            stacked: true,
+            beginAtZero: true,
+            position: 'right',
+            grid: {
+              drawOnChartArea: true,
+            },
+          },
+        },
+      },
+    });
+
+    // Function to generate random data
+    function getRandomData(sign, limit) {
+      var data = [];
+      for (var i = 0; i < 12; i++) {
+        data.push(Math.floor(Math.random() * (limit ?? 1000)) * sign);
+      }
+      return data;
+    }
+  </script>
+
+</body>
+
+</html>

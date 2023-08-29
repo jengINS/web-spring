@@ -1,0 +1,33 @@
+<div th:fragment="projectSideNav">
+<div class="card bg-dark text-white">
+    <div class="card-body" style="background-color: rgba(0, 0, 0, 0.3);">
+      <div class="d-flex flex-column">
+        <h5><i class="bi bi-clipboard2-check"></i> Project Management</h5>
+      </div>
+      <ul class="menu-list flex-grow-1 mt-3 list-unstyled">
+        <li class="collapsed">
+          <a class="m-link text-decoration-none active" data-toggle="collapse" href="#dashboard-Components" aria-expanded="true" aria-controls="dashboard-Components">
+            <i class="icofont-home fs-5"></i> <span>Dashboard</span> <span
+              class="arrow icofont-dotted-down ms-auto text-end fs-5"></span></a>
+          <!-- Menu: Sub menu ul -->
+          <ul class="sub-menu collapse show" id="dashboard-Components">
+            <li><a class="ms-link text-decoration-none" href="projectDashboard">
+                <span>Project Dashboard</span></a></li>
+          </ul>
+        </li>
+        <li class="collapsed">
+          <a class="m-link text-decoration-none" data-toggle="collapse" href="#project-Components" aria-expanded="true" aria-controls="project-Components">
+            <i class="icofont-briefcase"></i><span>Projects</span> 
+            <span class="arrow icofont-dotted-down ms-auto text-end fs-5"></span></a>
+          <!-- Menu: Sub menu ul -->
+          <ul class="sub-menu collapse show" id="project-Components">
+            <li><a class="ms-link text-decoration-none" href="projectManagement"><span>Projects</span></a>
+            </li>
+            <li><a class="ms-link text-decoration-none" href="boqList"><span>BOQ</span></a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+</div>
+</div>

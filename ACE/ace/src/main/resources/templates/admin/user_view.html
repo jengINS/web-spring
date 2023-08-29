@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.C.E. Parts Co., Ltd.</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="/alte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+
+<link rel="stylesheet" href="/alte/plugins/fontawesome-free/css/all.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="/alte/dist/css/adminlte.min.css">
+<!-- summernote -->
+<link rel="stylesheet" href="/alte/plugins/summernote/summernote-bs4.min.css">
+<!-- CodeMirror -->
+<link rel="stylesheet" href="/alte/plugins/codemirror/codemirror.css">
+<link rel="stylesheet" href="/alte/plugins/codemirror/theme/monokai.css">
+<!-- SimpleMDE -->
+<link rel="stylesheet" href="/alte/plugins/simplemde/simplemde.min.css">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+
+<div class="wrapper">
+    <div th:replace="admin/l_menu :: l_menu"></div>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">User Detail</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--First Half-->
+                <div class="row">
+                    <div class="col-md-10">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                            <div class="callout callout-warning">
+                                <h5>User Name</h5>
+                                <p>
+                                <span th:text="${userview.username}"></span>
+                                </p>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                        <div class="col-md-6">
+                            <div class="callout callout-warning">
+                                <h5>Name</h5>
+                                <p>
+                                <span th:text="${userview.full_name}"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="callout callout-info">
+                                <h5>Email</h5>
+                                <p>
+                                <span th:text="${userview.email}"></span>
+                                </p>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                    <div class="callout callout-info">
+                                        <h5>Department</h5>
+                                        <p>
+                                        <span th:text="${userview.department}"></span>
+                                        </p>
+                                    </div>
+                            </div>
+                            <div class="col-md-6">
+                                    <div class="callout callout-success">
+                                        <h5>User Status </h5>
+                                        <p>
+                                            <span th:if="${userview.user_status == 'A'}">
+                                                <span th:text="Active"></span>
+                                            </span>
+                                            <span th:unless="${userview.user_status == 'A'}">
+                                                <span th:text="InActive"></span>
+                                            </span>
+                                        </p>
+                                    </div>
+                            </div>                       
+                        </div>
+                    </div>
+
+                    <!--Second Half-->
+                    <!--Second Half-->
+
+                </div>
+        </section>
+    </div>
+    <!-- /.content-wrapper -->
+
+    <?php  include("layout_footer.php");  ?>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<!-- jQuery -->
+<script src="/alte/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/alte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/alte/dist/js/adminlte.min.js"></script>
+<!-- Summernote -->
+<script src="/alte/plugins/summernote/summernote-bs4.min.js"></script>
+<!-- CodeMirror -->
+<script src="/alte/plugins/codemirror/codemirror.js"></script>
+<script src="/alte/plugins/codemirror/mode/css/css.js"></script>
+<script src="/alte/plugins/codemirror/mode/xml/xml.js"></script>
+<script src="/alte/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/alte/dist/js/demo.js"></script>
+<script src="/alte/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
+<script>
+    $(function () {
+        bsCustomFileInput.init();
+    });
+</script>
+
+<script>
+    $(function () {
+        // Summernote
+        $('#du_detail').summernote()
+        $('#du_sub_detail').summernote()
+
+        // CodeMirror
+        CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+            mode: "htmlmixed",
+            theme: "monokai"
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico" />
+
+  <title>A.C.E. Parts Co., Ltd.</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.css" rel="stylesheet" th:href="@{css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{custom.css}">
+    <link rel="stylesheet" th:href="@{lib/DataTables/datatables.min.css}">
+  <link rel="stylesheet" th:href="@{lib/bss/css/bootstrap-select.min.css}">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js"
+      integrity="sha512-lDL6DD6x4foKuSTkRUKIMQJAoisDeojVPXknggl4fZWMr2/M/hMiKLs6sqUvxP/T2zXdrDMbLJ0/ru8QSZrnoQ=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <style>
+    .list-group-item {
+      /* border: 1px solid rgba(255, 255, 255, 1) !important; */
+    }
+     
+    .card-body {
+    
+    padding: 0.25rem;
+      }
+  </style>
+   <script>
+    $(function () {
+        $("#nav-placeholder").load("/navbar");
+        $("#sidenav-placeholder").load("/projectSideNav");
+    });
+</script>
+</head>
+
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="container-fluid">
+    <div class="row p-3">
+      <div th:replace="projectSideNav :: projectSideNav"  class="col-xl-2 col-lg-2 col-md-12 col-sm-12">
+      </div>
+      <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+        <div class="card w-100 h-100">
+          <div class="card-body">
+            <h3>Edit Project</h3>
+            <hr> 
+            <form action="#" method="#">
+              <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                  <label class="mt-3" for="ProjectID">Project ID</label>
+                  <input class="form-control" type="text" name="ProjectID" id="ProjectID" required>
+                </div>
+                <div class="col-xl-8 col-lg-8 col-md-6 col-sm-12">
+                  <label class="mt-3" for="ProjectName">Project Name</label>
+                  <input class="form-control" type="text" name="ProjectName" id="ProjectName" required>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                  <label class="mt-3" for="ProjectID">BOQ ID</label>
+                  <input class="form-control" type="text" name="boqID" id="boqID" required>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                  <label class="mt-3" for="budget">Budget</label>
+                  <input class="form-control" type="b" name="budget" id="budget" required>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                  <label class="mt-3" for="CustomerID">Customer ID</label>
+                  <input class="form-control" type="b" name="CustomerID" id="CustomerID" required>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                  <label class="mt-3" for="ProjectID">Start Date</label>
+                  <input class="form-control" type="date" name="startDate" id="startDate" required>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                  <label class="mt-3" for="endDate">End Date</label>
+                  <input class="form-control" type="date" name="endDate" id="endDate" required>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                  <label class="mt-3" for="ProjectID">Status</label>
+                  <select class="form-control" name="status" id="status" required>
+                    <option value="0">Draft</option>
+                    <option value="1" selected>In Progress</option>
+                    <option value="2">Complete</option>
+                  </select>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                  <label class="mt-3" for="ProjectID">Project Manager</label>
+                  <select class="form-control" name="pmList" id="pmList" required>
+                    <option value="">Select...</option>
+                    <option value="1">Mr.Wick</option>
+                    <option value="2">Mr.Jhon</option>
+                    <option value="3">Ms.Yukiko</option>
+                  </select>
+                </div>
+                <div class="col-xl-8 col-lg-8 col-md-6 col-sm-12">
+                  <label class="mt-3" for="ProjectID">Project Staffs</label>
+                  <select class="form-control selectpicker" data-live-search="true" name="sfList[]" id="sfList" multiple required>
+                    <option value="1">Koji Shimazu</option>
+                    <option value="2">Akira Shimazu</option>
+                    <option value="3">Marquis Vincent de Gramont</option>
+                    <option value="4">Siwadol Malisorn</option>
+                  </select>
+                </div>
+                <div class="col-12"><hr></div>
+                <div class="col-6">
+                  <button type="button" class="btn btn-primary btn-block" onclick="window.location.href='projectManagement.html'">บันทึกข้อมูล</button>
+                </div>
+                <div class="col-6">
+                  <button type="button" class="btn btn-secondary btn-block" onclick="window.location.href='projectManagement.html'">ย้อนกลับ</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/lib/bss/js/bootstrap-select.min.js}"></script>
+  <script type="text/javascript">
+    function getUrlVars()
+    {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    }
+    function getData(id) {
+        // get data from api
+        const res = {
+            project_id: "000" + id,
+            name: "Project " + id,
+            boq_id: "010123",
+            start_date: "2022-08-01",
+            end_date: "2023-01-01",
+            budget: "1,000,000.00",
+            customer_id: "2345678",
+            pm_id: "1",
+            staff_id: "2",
+        }
+        return res
+    }
+    $(document).ready(function () {
+        const params = getUrlVars();
+        const data = getData(params.id);
+        $('#ProjectID').val(data.project_id);
+        $('#ProjectName').val(data.name);
+        $('#boqID').val(data.boq_id);
+        $('#startDate').val(data.start_date);
+        $('#endDate').val(data.end_date);
+        $('#budget').val(data.budget);
+        $('#CustomerID').val(data.customer_id);
+        $('#pmList').val(data.pm_id);
+        $('#sfList').val(data.staff_id);
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{css/noti.css}" />     
+    <script th:attr="data-array=${ps_name}" th:src="@{js/noti.js}" defer></script>
+    
+</head>
+<body>
+<div th:fragment="navbar">
+<nav class="navbar navbar-expand-lg p-3 noBackgroundColor text-white bg-dark" >
+    <a class="navbar-brand ml-3" href="index"><img th:src="@{image/1logo.png}" width="50" height="50" alt="">
+        ACE</a>
+    <!-- <a class="navbar-brand ml-3" href="index.html"><img src="@{}" width="50" height="50" alt=""> ACE</a> -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="projectManagement">Project Management</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="supplierManagement">Supplier Management</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="LOGManagement">Letter Of Guatantee</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="IOUManagement">IOU</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="account">ACCOUNTS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="user_list">ADMIN</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto d-flex align-items-center">
+            
+
+            <p class="mt-3"> <p th:text=" ${ps_name}"></p>
+
+            <span th:if="${isLogin == 'True'}">
+                <div style="margin-left: 50px !important;margin-right: 0px !important;">
+                    <div class="icon" id="bell"
+                        style="display: flex;flex-direction: row-reverse; margin-right: 10px; flex-wrap: nowrap;align-content: center;justify-content: space-evenly;align-items: flex-end;">
+                        <img th:src="@{image/AC7dgLA.png}" alt="">
+                        <span id="alertCount" class="badge badge-light"></span>
+                    </div>
+                
+                    <div class="notifications" style="z-index: 2; max-height: 600px;  overflow: auto;" id="box">
+                        <h2><span>Notifications</span><span></span></h2>
+                
+                        <div id="container"></div>
+                
+                    </div>
+                </div>
+            </span>
+            <span th:if="${isLogin != 'True'}">
+            <a href="login" class="btn btn-outline-light mx-5" type="button"><span class="mx-5 rounded-pill">LOG IN</span></a>
+            </span>
+            <span th:unless="${isLogin != 'True'}">
+            <a href="logout" class="btn btn-outline-light mx-5" type="button"><span class="mx-5 rounded-pill">LOG OUT</span></a>
+            </span>
+        </ul>
+    </div>
+</nav>
+</div>
+
+<script th:inline="javascript">
+    var dataArray  = /*[[${ps_name}]]*/ '';
+    //    console.log("Data Thymeleaf:", dataArray);
+</script>
+
+
+
+
+<script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'></script>                   
+
+<script type='text/javascript'>$(document).ready(function(){
+var down = false;
+$('#bell').click(function(e){
+    console.log("eee");
+  
+    var color = $(this).text();
+    if(down){
+        
+        $('#box').css('height','0px');
+        $('#box').css('opacity','0');
+        down = false;
+    }else{
+
+        $('#box').css('height','auto');
+        $('#box').css('opacity','1');
+        down = true;
+        
+    }
+    
+});
+    
+    });</script>
+
+<script th:inline="javascript">
+    var user_nameQ = /*[[${ps_name}]]*/ '';
+    // console.log("PS_name="+user_nameQ);
+    var dataArrayQ=null;
+fetch(`/get-query?name=${user_nameQ}`)
+    .then(response => response.json()) // Parse the response as JSON
+    .then(dataArray => {
+        dataArrayQ=dataArray;
+        genNoti();
+        // Process the dataArray as needed
+    })
+    .catch(error => {
+        console.error("Error fetching Query:", error);
+    });
+    
+
+
+function genNoti() {
+    
+var dataArray = dataArrayQ;
+
+    var dataArraycount =  dataArrayQ.length;
+    var count = dataArraycount;
+    var alertC = document.getElementById("alertCount");
+    if(count!=0)
+    alertC.innerText = count;
+    var container = document.getElementById("container");
+    var countN = 1;
+    dataArray.forEach(function (row) {
+
+        var notificationDiv = document.createElement("div");
+        notificationDiv.className = "notifications-item";
+        notificationDiv.id = "noti" + countN;
+        var imgD = document.createElement("img");
+        imgD.src = "/image/alert-ic.png";
+        notificationDiv.appendChild(imgD);
+        var strDiv = document.createElement("div");
+        strDiv.className = "text";
+        var h4Div = document.createElement("h4");
+        h4Div.innerText = row[2];
+        var pDiv = document.createElement("p");
+        pDiv.innerText = row[3];
+        strDiv.appendChild(h4Div);
+        strDiv.appendChild(pDiv);
+        notificationDiv.appendChild(strDiv);
+        notificationDiv.addEventListener("click", function () {
+            window.location.href = "#";
+        });
+        container.appendChild(notificationDiv);
+        countN++;
+    });
+   
+}
+
+    
+     
+</script>  
+</body>
+</html>

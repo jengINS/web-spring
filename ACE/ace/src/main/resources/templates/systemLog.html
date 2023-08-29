@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico" />
+
+  <title>A.C.E. Parts Co., Ltd.</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+  <link rel="stylesheet" href="../static/custom.css">
+  <link rel="stylesheet" href="../static/lib/DataTables/datatables.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js"
+    integrity="sha512-lDL6DD6x4foKuSTkRUKIMQJAoisDeojVPXknggl4fZWMr2/M/hMiKLs6sqUvxP/T2zXdrDMbLJ0/ru8QSZrnoQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <style>
+    .list-group-item {
+      /* border: 1px solid rgba(255, 255, 255, 1) !important; */
+    }
+  </style>
+  <script>
+    $(function () {
+      $("#nav-placeholder").load("navbar.html");
+    });
+  </script>
+</head>
+
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="container-fluid">
+    <div class="row p-3">
+      <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12">
+        <div class="card bg-dark text-white">
+            <div class="card-body" style="background-color: rgba(0, 0, 0, 0.3);">
+              <div class="d-flex flex-column">
+                <h5><i class="bi bi-clipboard2-check"></i> System Log</h5>
+              </div>
+              <ul class="menu-list flex-grow-1 mt-3 list-unstyled">
+                <li><a class="ms-link text-decoration-none" href="systemLog.html"><span>Logs</span></a></li>
+              </ul>
+            </div>
+        </div>
+      </div>
+      <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+        <div class="card w-100 h-100">
+          <div class="card-body">
+            <div class="w-100 d-flex flex-row justify-content-between my-2">
+              <h3>System Logs</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="table" id="TableList">
+                <thead>
+                  <tr>
+                    <th>NO.</th>
+                    <th>DATE</th>
+                    <th>USER</th>
+                    <th>TITLE</th>
+                    <th>DESCRIPTION</th>
+                    <th>ACTION</th>
+                    <th>VALUE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>16/12/2022</td><td>User 1</td><td>Add BOQ</td><td>ค่าตู้บานเลื่อน  12 ตู้</td><td>Add</td><td>2,100.00</td></tr>
+                    <tr><td>2</td><td>03/01/2023</td><td>User 1</td><td>Add Project</td><td>Toll way</td><td>Add</td><td>0.00</td></tr>
+                    <tr><td>3</td><td>23/12/2022</td><td>User 3</td><td>Add BOQ</td><td>ค่า Pom Black  100 ชิ้น</td><td>Add</td><td>1,579.20</td></tr>
+                    <tr><td>4</td><td>28/12/2022</td><td>User 2</td><td>Add Project</td><td>ค่าอุปกรณ์ Office</td><td>Add</td><td>90.67</td></tr>
+                    <tr><td>5</td><td>26/12/2022</td><td>User 3</td><td>Add Project</td><td>เลี้ยงรับรองลูกค้า</td><td>Add</td><td>0.00</td></tr>
+                    <tr><td>6</td><td>26/12/2022</td><td>User 2</td><td>Print</td><td>เลี้ยงรับรองลูกค้า</td><td>Add</td><td>0.00</td></tr>
+                    <tr><td>7</td><td>04/01/2023</td><td>User 4</td><td>Approve</td><td>เลี้ยงรับรองลูกค้า</td><td>Add</td><td>0.00</td></tr>
+                    <tr><td>8</td><td>04/01/2023</td><td>User 1</td><td>Approve</td><td>เลี้ยงรับรองลูกค้า</td><td>Add</td><td>0.00</td></tr>
+                    <tr><td>9</td><td>26/12/2022</td><td>User 1</td><td>Approve</td><td>เลี้ยงรับรองลูกค้า</td><td>Add</td><td>0.00</td></tr>
+                    <tr><td>10</td><td>01/12/2022</td><td>User 5</td><td>Print</td><td>ค่าหัวสกูร  200 ตัว</td><td>Add</td><td>0.00</td></tr>               
+                </tbody>
+                <tfoot>
+                  <!-- <tr>
+                    <th>Project No</th>
+                    <th>Project</th>
+                    <th>Expense</th>
+                    <th>Remaining</th>
+                    <th>Created Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr> -->
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/lib/DataTables/datatables.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#TableList').DataTable({
+        "ordering": true,
+        order: [[1, 'desc']],
+        "oLanguage": {
+          "sEmptyTable": "ไม่มีรายการ Log ที่ถูกเพิ่ม"
+        }
+      });
+    });
+  </script>
+
+
+</body>
+
+</html>

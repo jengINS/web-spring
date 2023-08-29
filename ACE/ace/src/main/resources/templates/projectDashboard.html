@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="image/ico-logo.ico" />
+
+  <title>A.C.E. Parts Co., Ltd.</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+  <link rel="stylesheet" href="/custom.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+  <style>
+    .list-group-item {
+      /* border: 1px solid rgba(255, 255, 255, 1) !important; */
+    }
+
+    @media (min-width: 1200px){
+      .col-xl-7 {
+          /* ms-flex: 0 0 50% !important; */
+          max-width: 50% ;
+      }
+    }
+
+    img {
+    width: 30px;
+    height: 30px;
+}
+  </style>
+  <script>
+    $(function () {
+            $("#nav-placeholder").load("/navbar");
+        });
+    </script>
+  <script>
+    $(function () {
+       $("#sidenav-placeholder").load("/projectSideNav");
+    });
+  </script>
+</head>
+
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="container-fluid">
+    <div class="row p-3">
+      <div th:replace="projectSideNav :: projectSideNav" class="col-xl-2 col-lg-2 col-md-12 col-sm-12">
+      </div>
+      <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6 col-md-12">
+            <div class="card h-100">
+              <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <h5>Project name</h5>
+                        <select class="form-control" name="project" id="project" required>
+                        <option value="1" selected>Project 0001</option>
+                        <option value="2">Project 0002</option>
+                        <option value="3">Project 0003</option>
+                        </select>
+                    </div>
+                  <div class="col-lg-6 col-md-12">
+                    <div class="card my-3">
+                      <div class="card-body">
+                        <h3 class="font-weight-bold"><i class="bi bi-check2-square"></i></h3>
+                        <h5>Attendance</h5>
+                        <h5 class="text-muted">400</h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-12">
+                    <div class="card my-3">
+                      <div class="card-body">
+                        <h3 class="font-weight-bold"><i class="bi bi-clock"></i></h3>
+                        <h5>Time Progess</h5>
+                        <h5 class="text-muted">400</h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-12">
+                    <div class="card my-3">
+                      <div class="card-body">
+                        <h3 class="font-weight-bold"><i class="bi bi-clock"></i></h3>
+                        <h5>Absent</h5>
+                        <h5 class="text-muted">0%</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-md-12">
+            <div class="card h-100">
+              <div class="card-body">
+                <div class="d-flex flex-row justify-content-between"><h5>BOQ Budget : </h5><h3>45%</h3></div>
+                <canvas id="boqChart" style="height: 400px;"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mt-3">
+            <div class="card">
+              <div class="card-body">
+                <canvas id="ExpenseChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mt-3">
+            <div class="card">
+              <div class="card-body">
+                <canvas id="byMonthChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mt-3">
+            <div class="card">
+              <div class="card-body">
+                <canvas id="byProjectChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-grey">
+              <div class="card-body">
+                <div class="row">
+                    <div class="col-6 d-flex flex-column align-items-center justify-content-center">
+                        <div class="big-icon d-flex align-items-center justify-content-center">
+                            <i class="bi bi-file-earmark-text"></i>
+                        </div>
+                        <h1>156</h1>
+                        <h6>BOQ List</h6>
+                    </div>
+                    <div class="col-6 d-flex align-items-center justify-content-center">
+                        <img src="/image/1logo.png" class="img-fluid w-75" style="opacity: 0.5;" alt="logo">
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card mt-4">
+              <div class="card-body">
+                <h3>Expense List</h3>
+                <hr>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row">
+                        <div class="col-3">
+                            <img class="project-transaction-image" src="/image/user-img.png" alt="user" />
+                        </div>
+                        <div class="col-9">
+                            <h4>Natal Pammas</h4>
+                            <h4 class="position-text">PM</h4>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <h6 class="date-text"><i class="bi bi-clock"></i> 02/05/2566 5,000 บาท</h6>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row">
+                        <div class="col-3">
+                            <img class="project-transaction-image" src="/image/user-img.png" alt="user" />
+                        </div>
+                        <div class="col-9">
+                            <h4>Natal Pammas</h4>
+                            <h4 class="position-text">PM</h4>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <h6 class="date-text"><i class="bi bi-clock"></i> 02/05/2566 5,000 บาท</h6>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row">
+                        <div class="col-3">
+                            <img class="project-transaction-image" src="/image/user-img.png" alt="user" />
+                        </div>
+                        <div class="col-9">
+                            <h4>Natal Pammas</h4>
+                            <h4 class="position-text">PM</h4>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <h6 class="date-text"><i class="bi bi-clock"></i> 02/05/2566 5,000 บาท</h6>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row">
+                        <div class="col-3">
+                            <img class="project-transaction-image" src="/image/user-img.png" alt="user" />
+                        </div>
+                        <div class="col-9">
+                            <h4>Natal Pammas</h4>
+                            <h4 class="position-text">PM</h4>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <h6 class="date-text"><i class="bi bi-clock"></i> 02/05/2566 5,000 บาท</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    var canvas = document.getElementById('boqChart');
+    var ctx = canvas.getContext('2d');
+
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Expense', 'Remaining'],
+        datasets: [
+          {
+            data: [45, 55],
+            backgroundColor: ['#36a2eb', '#ff6384'],
+          },
+        ],
+      },
+      options: {
+
+        plugins: {
+          legend: { position: 'bottom' },
+
+          datalabels: {
+            color: 'white', // Customize label color
+            textAlign: 'center',
+            font: {
+              size: 14, // Customize label font size
+            },
+            formatter: function (value, context) {
+              return context.chart.data.labels[context.dataIndex];
+            },
+          },
+        },
+      },
+    });
+  </script>
+  <script>
+    new Choices('#project',{
+        itemSelectText: ''
+    });
+    var canvas = document.getElementById('ExpenseChart');
+    var canvas2 = document.getElementById('byMonthChart');
+    var canvas3 = document.getElementById('byProjectChart');
+    var ctx = canvas.getContext('2d');
+    var ctx2 = canvas2.getContext('2d');
+    var ctx3 = canvas3.getContext('2d');
+
+    // Random x-axis data (months)
+    var months = ['January', 'February', 'March', 'April', 'May', 'June','July', 'August', 'September', 'October', 'November', 'December'];
+    var projects = ['Project 0001', 'Project 0002', 'Project 0003'];
+
+    // Random data for Expense and Forecast
+    var expenseData = getRandomData();
+    var forecastData = getRandomData();
+    var performanceMonthData = getRandomData();
+    var performanceProjectData = getRandomData(projects.length);
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: months,
+        datasets: [
+          {
+            label: 'Expense',
+            data: expenseData,
+            backgroundColor: '#ff6384aa',
+            borderWidth: 4,
+            borderColor: '#ff6384',
+            borderRadius: 4,
+            borderSkipped: false,
+          },
+          {
+            label: 'Forecast',
+            data: forecastData,
+            backgroundColor: '#36a2ebaa',
+            borderWidth: 4,
+            borderColor: '#36a2eb',
+            borderRadius: 4,
+            borderSkipped: false,
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Expenses',
+          },
+        },
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: projects,
+        datasets: [
+          {
+            label: 'ผลประกอบการ',
+            data: performanceProjectData,
+            backgroundColor: '#36a2ebaa',
+            borderWidth: 4,
+            borderColor: '#36a2eb',
+            borderRadius: 4,
+            borderSkipped: false,
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'ผลประกอบการราย Project',
+          },
+        },
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+
+    new Chart(ctx3, {
+      type: 'bar',
+      data: {
+        labels: months,
+        datasets: [
+          {
+            label: 'ผลประกอบการ',
+            data: performanceMonthData,
+            backgroundColor: '#36be76aa',
+            borderWidth: 4,
+            borderColor: '#36be76',
+            borderRadius: 4,
+            borderSkipped: false,
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'ผลประกอบการรายเดือน',
+          },
+        },
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+
+    // Function to generate random data
+    function getRandomData(count) {
+      var data = [];
+      for (var i = 0; i < (count ?? 12); i++) {
+        data.push(Math.floor(Math.random() * 1000));
+      }
+      return data;
+    }
+  </script>
+
+</body>
+
+</html>

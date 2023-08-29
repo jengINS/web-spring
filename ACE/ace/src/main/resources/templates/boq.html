@@ -1,0 +1,471 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/image/ico-logo.ico">
+
+    <title>A.C.E. Parts Co., Ltd.</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet" th:href="@{css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{custom.css}">
+    <link rel="stylesheet" th:href="@{lib/DataTables/datatables.min.css}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js" integrity="sha512-lDL6DD6x4foKuSTkRUKIMQJAoisDeojVPXknggl4fZWMr2/M/hMiKLs6sqUvxP/T2zXdrDMbLJ0/ru8QSZrnoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        .list-group-item {
+            /* border: 1px solid rgba(255, 255, 255, 1) !important; */
+        }
+        .row {
+      flex-wrap: nowrap;
+    }
+
+    /* Style for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        /* Style for the modal content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Style for the close button */
+        .close {
+            color: #e20f42;
+            text-align: end;
+            float: right;
+            font-size: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+    
+    <script>
+        $(function () {
+            $("#nav-placeholder").load("/navbar");
+            $("#sidenav-placeholder").load("/projectSideNav");
+        });
+    </script>
+</head>
+
+<body>
+    <div id="nav-placeholder"></div>
+
+    <div class="container-fluid">
+        <div class="row p-3">
+            <div th:replace="projectSideNav :: projectSideNav" class="col-xl-2 col-lg-2 col-md-12 col-sm-12">
+            </div>
+            <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+                <div class="card w-100 h-100">
+                    <div class="card-body">
+                        <div class="w-100 d-flex justify-content-between">
+                            <div>
+                                <h3>Bill of Quantity</h3>
+                            </div>
+                            <div>
+                                <table>
+                                    <tbody><tr>
+                                        <td style="
+    text-align: right;
+">Date : </td>
+                                        <td>
+                                            <input type="date" id="dateInput"  class="form-control" required="" disabled>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Budget Estimate By : </td>
+                                        <td>
+                                            <select class="form-control" name="" id="" required="" disabled>
+                                                <option id="useBoq" value="1">User 1</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="
+    text-align: right;
+    color: red;
+">BOQ ID* : </td>
+                                        <td>
+                                            <input id="boqID" required>
+                                            
+                                        </td>
+                                    </tr>
+                                </tbody></table>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="table-responsive table-bordered my-5">
+                                <table class="w-100 text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>catagory</th>
+                                            <th>Description</th>
+                                            <th>Cost</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tbody id="tableDetail">
+                                            <!-- <tr>
+                                                <td>1</td>
+                                                
+                                                <td>ค่าของ</td><td>น๊อต</td>
+                                                <td>1,300.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                
+                                                <td>ค่าของ</td><td>กรรไกร</td>
+                                                <td>1588,300.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                
+                                                <td>ค่าแรง</td><td>คนงาน1</td>
+                                                <td>1,010.22</td>
+                                            </tr> -->
+                                        </tbody>
+                                        
+                                        <tr>
+                                            <td class="text-center" colspan="2">Total</td>
+                                            
+<td class="font-weight-bold text-right"></td><td id="costTotal" class="font-weight-bold text-right">0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <form action="#" method="post">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="">Add a row</label>
+                                        <select class="form-control" name="selectOption" id="selectOption" required="">
+                                            <option value="1">ค่าของ</option>
+                                            <option value="2">ค่าแรง</option>
+                                            <option value="3">MSF</option>
+                                            <option value="4">เลี้ยงรับรอง</option>
+                                            <option value="5">อื่นๆ (เกี่ยวกับงาน)</option>
+                                            <option value="6">ค่าใช้จ่ายออฟฟิศ</option>
+                                            <option value="7">ค่าใช้จ่ายบัญชี</option>
+                                            <option value="8">ค่าใช้จ่ายธนาคาร</option>
+                                            <option value="9">อื่นๆ</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                
+                                
+
+                                <div id="myModal" class="modal">
+                                    <div class="modal-content" style="height: 60%;">
+                                        <span style="line-height: 0;" class="close">&times;</span>
+                                        <p id="modalData"></p>
+                                        
+
+                                        <iframe id="modalFrame" frameborder="0" scrolling="auto" style="height: 100%;"></iframe>
+                                    </div>
+                                </div>
+                                <p id="receivedData"></p>
+                                <div class="col-2">
+                                    <label for="" class="" hidden="">Add a row</label><br>
+                                    <!-- onclick="window.location.href='newRow'" -->
+                                    <button id="openModalButton" type="button"  class="btn btn-primary mt-2 w-100">ADD</button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                        <div class="w-100 d-flex justify-content-between">
+                            <div class="" style="width: 49% !important;">
+                                <button id="submitButton" class="btn btn-primary btn-block w-100"  type="submit">submit</button>
+                            </div>
+                            
+                                <div class="table-bordered" style="border:unset;">
+                                    <table style="display: flex; justify-content: flex-end;">
+                                        <tbody id="resultTableBody"></tbody>
+                                    </table>
+                                    <table class="" style="margin-top: 10px;">
+                                        <tbody>
+                                      
+                                        <tr style="font-weight: 800;">
+                                            <td style="border: unset;">Grand Total : </td>
+                                            <td id="grandTotal" style=" border: unset; text-align: right;">0</td>
+                                        </tr>
+                                    </tbody></table>
+
+
+                                    
+                                </div>
+                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script th:src="@{js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{lib/DataTables/datatables.min.js}"></script>
+    <script>
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        const day = currentDate.getDate().toString().padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+        const dateInput = document.getElementById('dateInput');
+        dateInput.value = formattedDate;
+        dateInput.disabled = true;
+    </script>
+    <script th:inline="javascript">
+        var dataArray  = /*[[${ps_name}]]*/ '';
+        const divData = document.getElementById('useBoq');
+        divData.innerText=dataArray;
+       
+        divData.disabled = true;
+    </script>
+     <script>
+        // Calculate the sum of values
+        function calTotaltable() {
+
+        const valueElements = document.querySelectorAll('tbody tr td:nth-child(4)');
+        let total = 0;
+        valueElements.forEach(element => {
+            const value = parseFloat(element.textContent.replace(',', ''));
+            if (!isNaN(value)) {
+                total += value;
+            }
+        });
+
+        const costTotalElement = document.getElementById('costTotal');
+        costTotalElement.textContent = total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+    </script>
+    
+    <script>
+            function calGrandTotal() {
+
+                const tabledetail = document.getElementById('tableDetail');
+                const dataRows = tabledetail.querySelectorAll('tbody tr');
+                const groupedData = {};
+
+                dataRows.forEach(row => {
+                    const groupKey = row.querySelector('td:nth-child(2)').textContent.trim();
+                    const value = parseFloat(row.querySelector('td:nth-child(4)').textContent.replace(',', ''));
+                    
+                    if (!isNaN(value)) {
+                        if (!groupedData[groupKey]) {
+                            groupedData[groupKey] = 0;
+                        }
+                        groupedData[groupKey] += value;
+                    }
+                });
+
+                const resultTableBody = document.getElementById('resultTableBody');
+                resultTableBody.innerHTML = '';
+                
+                for (const groupKey in groupedData) {
+                    const newRow = document.createElement('tr');
+                    const labelCell = document.createElement('td');
+                    const valueCell = document.createElement('td');
+                    
+                    labelCell.textContent = `${groupKey} : `;
+                    labelCell.style.textAlign="right";
+                    valueCell.textContent = groupedData[groupKey].toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    valueCell.style.textAlign="right";
+                    newRow.appendChild(labelCell);
+                    newRow.appendChild(valueCell);
+                    
+                    resultTableBody.appendChild(newRow);
+                }
+                const costTotal = document.getElementById('costTotal');
+                const grandTotalElement = document.getElementById('grandTotal');
+                grandTotalElement.innerText=costTotal.innerText;
+            }
+    </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const openModalButton = document.getElementById("openModalButton");
+                const modal = document.getElementById("myModal");
+                var modalFrame = document.getElementById("modalFrame");
+                const closeModalButton = document.querySelector(".close");
+    
+                openModalButton.addEventListener("click", function() {
+                    modalFrame.src = "newRow"; // Load the content of addpage.html into the iframe
+                    modal.style.display = "block"; // Show the modal
+
+                    const selectedOp = document.getElementById("selectOption");
+                    // const selectedValue = selectedOp.value;
+                    const selectedText = selectedOp.options[selectedOp.selectedIndex].text;
+
+                    var modalIframe = document.getElementById("modalFrame");
+                    modalIframe.onload = function() {
+                        // Find the "headName" element within the iframe content
+                        var modalIframeContent = modalIframe.contentDocument || modalIframe.contentWindow.document;
+                        var modalHeadName = modalIframeContent.querySelector("#headName");
+
+                        // Change the heading text in the iframe
+                        if (modalHeadName) {
+                            modalHeadName.innerText = selectedText;
+                        }
+                    };
+
+
+    
+                    // Close the modal when the close button is clicked
+                    closeModalButton.addEventListener("click", function() {
+                        modal.style.display = "none";
+                        modalFrame.src = ""; // Clear the iframe content
+                    });
+                });
+            });
+        </script>
+
+
+           
+            <script>
+                     function closeModal() {
+                        const modal = document.getElementById("myModal");
+                        const modalFrame = document.getElementById("modalFrame");
+                        modal.style.display = "none";
+                        }
+
+                    function receiveDataFromModal(data) {
+
+                            var tableBody = document.getElementById("tableDetail");
+                            for (var i = 1; i <= data.length; i++) {
+
+                            var newRow = document.createElement("tr");
+                            var cell1 = document.createElement("td");
+                            cell1.textContent = tableBody.children.length+1; // Set the value for the first cell
+                            var cell2 = document.createElement("td");
+                            cell2.textContent = data[i-1].head; // Set the value for the second cell
+                            var cell3 = document.createElement("td");
+                            cell3.textContent = data[i-1].description; // Set the value for the third cell
+                            var cell4 = document.createElement("td");
+                            cell4.textContent = data[i-1].cost; // Set the value for the fourth cell
+
+                            newRow.appendChild(cell1);
+                            newRow.appendChild(cell2);
+                            newRow.appendChild(cell3);
+                            newRow.appendChild(cell4);
+
+                            
+                            tableBody.appendChild(newRow);
+                        }
+                   // console.log(data);
+                    calTotaltable();
+                    calGrandTotal();
+                    // Close the modal after receiving data
+                    closeModal();
+                    }
+            </script>
+            <script>
+                function submitData() {
+                    // Get the data from the table cells
+                      
+                        var tableRows = document.querySelectorAll("table tr");
+                
+
+                        ///sent data array
+                        var rowDataInArray=[];
+                        rowDataInArray.push(["custom_insert_Boq",document.getElementById("dateInput").value.toString(),document.getElementById("useBoq").innerText,document.getElementById("boqID").value.toString(),document.getElementById("grandTotal").innerText]);
+                        var trcells = document.getElementById("tableDetail").querySelectorAll("tr");
+                        trcells.forEach(function(trcell) {
+                            var rowDataCell =[];
+                            var cells = trcell.querySelectorAll("td");
+                            cells.forEach(function(cell) {
+                                rowDataCell.push(cell.innerText);
+                             });
+                            rowDataInArray.push(rowDataCell);
+                        });
+
+                    // Send the data to the Spring Controller using AJAX
+                    $.ajax({
+                        type: "POST",
+                        url: "/custom_update_Boq",
+                        data: JSON.stringify(rowDataInArray),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(response) {
+                             window.location.href = "/boqList";
+                        },
+                        error: function(error) {
+
+                            alert(error.responseText);
+                            // Handle errors if necessary
+                        }
+
+                        
+                    });
+                    
+                }
+            </script>
+            <script th:inline="javascript">
+                var dataArray  = /*[[${qArray}]]*/ '';
+                var btt =document.getElementById("submitButton");
+                if(dataArray!=null)
+                btt.innerText="Edit Submit";
+                btt.addEventListener("click", function() {
+                    var inputElement = document.getElementById("boqID");
+
+                    if (inputElement.value === "") {
+                        // The "required" attribute is set with an empty value
+                        alert("This BOQ ID is required!");
+                        return;
+                    }
+                    else if(document.getElementById("tableDetail").querySelectorAll("td").length==0)
+                    {
+                        alert("This data  is required!");
+                        return;
+                    }
+                    else
+                    {
+                        var dataArray2  = /*[[${qArray}]]*/ '';
+                        if(dataArray2!=null)
+                        {
+                           // editData();
+                        }
+                        else
+                        submitData();
+                    }
+                });
+            </script>
+            <!-- <script>
+                var url = window.location.href;
+                    var url = new URL(url);
+                    var idValue = url.searchParams.get('id');
+
+            </script> -->
+</body></html>

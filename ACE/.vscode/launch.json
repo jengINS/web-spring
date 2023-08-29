@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AceApplication<ace>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.tedinno.ace.AceApplication",
+            "projectName": "ace",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

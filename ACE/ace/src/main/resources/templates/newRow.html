@@ -1,0 +1,216 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/image/ico-logo.ico">
+
+    <title>A.C.E. Parts Co., Ltd.</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" href="custom.css">
+    <link rel="stylesheet" href="lib/DataTables/datatables.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js" integrity="sha512-lDL6DD6x4foKuSTkRUKIMQJAoisDeojVPXknggl4fZWMr2/M/hMiKLs6sqUvxP/T2zXdrDMbLJ0/ru8QSZrnoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        .list-group-item {
+            /* border: 1px solid rgba(255, 255, 255, 1) !important; */
+        }
+    </style>
+     <script>
+        $(function () {
+            $("#nav-placeholder").load("/navbar");
+            $("#sidenav-placeholder").load("/projectSideNav");
+        });
+    </script>
+    <style>
+      .btn-info2 {
+            color: #fff;
+            background-color: #380541;
+            border-color: #140129;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row p-3" style="display: flex; justify-content: center;">
+            
+            <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+                <div class="card w-100 h-100">
+                    <div class="card-body">
+                        <form action="#" method="post"><h2 id="headName" style="text-align: center;">ค่าของ</h2><div id="container"  class="row">
+                                <div class="col-6 offset-3">
+                                    <div class="form-row">
+                                        <div class="col">
+                                          <label for="">Description</label>
+                                          <input type="text" class="form-control description" placeholder="">
+                                        </div>
+                                        <div class="col">
+                                          <label for="">Cost</label>
+                                          <input type="text" class="form-control cost" placeholder="" oninput="validateNumberInput(this)">
+                                        </div>
+                                      </div>
+                                </div>
+                              
+                                <div class="col-6 offset-3">
+                                    <div class="form-row">
+                                        <div class="col">
+                                          <label for="Description">Description</label>
+                                          <input type="text" class="form-control Description" placeholder="">
+                                        </div>
+                                        <div class="col">
+                                          <label for="Cost">Cost</label>
+                                          <input type="text" class="form-control Cost" placeholder="" oninput="validateNumberInput(this)">
+                                        </div>
+                                      </div>
+                                </div>
+                               
+                               
+                                
+                            </div>
+                        </form>
+                        <form  action="#" method="post"><h2 style="text-align: center;"></h2><div style="display: flex; justify-content: center;" class="row">
+                            <div class="col-6 mt-4" >
+                              <button  id="addButton" class="btn btn-info btn-block" type="button">เพิ่มแถว</button>
+                          </div>
+                         </div>
+                     </form>
+                    <form style="display: flex;justify-content: center;align-content: flex-end;">
+                        <div class="col-6 mt-4" >
+                            <button id="saveButton" style="text-align: center;" class="btn btn-primary btn-block" type="button" >บันทึก</button>
+                        </div>
+                    </form>
+                  </div>
+               </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validateNumberInput(input) {
+      // Remove non-numeric characters
+      input.value = input.value.replace(/[^0-9.]/g, '');
+
+// Ensure that there's only one dot in the input
+        var dotCount = input.value.split('.').length - 1;
+        if (dotCount > 1) {
+            input.value = input.value.replace(/\./g, '');
+        }
+  }
+    </script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="lib/DataTables/datatables.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        const addButton = document.getElementById("addButton");
+        const container = document.getElementById("container");
+
+        addButton.addEventListener("click", function() {
+            const newDiv = document.createElement("div");
+            newDiv.className = "col-6 offset-3";
+
+            const newFormRow = document.createElement("div");
+            newFormRow.className = "form-row";
+
+            const descriptionCol = document.createElement("div");
+            descriptionCol.className = "col";
+            const descriptionLabel = document.createElement("label");
+            descriptionLabel.textContent = "Description";
+            const descriptionInput = document.createElement("input");
+            descriptionInput.type = "text";
+            descriptionInput.className = "form-control Description";
+            descriptionInput.placeholder = "";
+
+            const costCol = document.createElement("div");
+            costCol.className = "col";
+            const costLabel = document.createElement("label");
+            costLabel.textContent = "Cost";
+            const costInput = document.createElement("input");
+            costInput.type = "text";
+            costInput.className = "form-control Cost";
+            costInput.placeholder = "";
+            costInput.oninput = function() 
+            {
+              validateNumberInput(costInput);
+            };
+
+            descriptionCol.appendChild(descriptionLabel);
+            descriptionCol.appendChild(descriptionInput);
+
+            costCol.appendChild(costLabel);
+            costCol.appendChild(costInput);
+
+            newFormRow.appendChild(descriptionCol);
+            newFormRow.appendChild(costCol);
+
+            newDiv.appendChild(newFormRow);
+
+            container.appendChild(newDiv);
+        });
+    });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+    // const addButton = document.getElementById("addButton");
+    const saveButton = document.getElementById("saveButton");
+    const itemContainer = document.getElementById("container");
+    const data = []; // Array to store the collected data
+    const items = [];
+
+    
+
+    saveButton.addEventListener("click", function() {
+      const descriptionInputs = itemContainer.querySelectorAll(".description");
+        const costInputs = itemContainer.querySelectorAll(".cost");
+
+        const newItems = [];
+
+        for (let i = 0; i < descriptionInputs.length; i++) {
+            const descriptionValue = descriptionInputs[i].value;
+            const costValue = costInputs[i].value;
+
+            if (descriptionValue && costValue) {
+                newItems.push({
+                    head:document.getElementById("headName").innerText,
+                    description: descriptionValue,
+                    cost: costValue
+                });
+            }
+        }
+
+        if (newItems.length > 0) {
+            items.push(...newItems);
+
+            descriptionInputs.forEach(input => input.value = ""); // Clear inputs after adding
+            costInputs.forEach(input => input.value = ""); // Clear inputs after adding
+
+            
+            sendDataToMain(items);
+              
+
+            
+        }
+    });
+});
+    </script>
+      <script>
+        const sendDataToMain = (dataToSend) => {
+        //   const dataToSend = ["s", "ww"];
+          window.parent.receiveDataFromModal(dataToSend);
+        };
+      </script>
+    <!-- <button onclick="sendDataToMain()">Send Data to Main</button> -->
+   
+</body></html>

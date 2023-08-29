@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico" />
+
+  <title>A.C.E. Parts Co., Ltd.</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+  <link rel="stylesheet" href="../custom.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js"
+    integrity="sha512-lDL6DD6x4foKuSTkRUKIMQJAoisDeojVPXknggl4fZWMr2/M/hMiKLs6sqUvxP/T2zXdrDMbLJ0/ru8QSZrnoQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> -->
+  <style>
+    .list-group-item {
+      /* border: 1px solid rgba(255, 255, 255, 1) !important; */
+    }
+
+    .nav-pills>li {
+    float: left;
+}
+
+.nav-pills>li>a {
+    border-radius: 4px;
+}
+
+.nav-pills>li+li {
+    margin-left: 2px;
+}
+
+.nav-pills>li.active>a,.nav-pills>li.active>a:hover,.nav-pills>li.active>a:focus {
+    color: #fff;
+    background-color: #428bca;
+}
+.nav>li>a:hover,.nav>li>a:focus {
+    text-decoration: none;
+    background-color: #eee
+}
+
+a.list-group-item.active>.badge,.nav-pills>.active>a>.badge {
+    color: #428bca;
+    background-color: #fff;
+}
+
+.pill-free{
+    color: #428bca;
+    text-decoration: none;
+  }
+
+.nav-pills>li>a>.badge {
+    margin-left: 3px;
+}
+
+
+    #exTab1 .nav-pills > li > a {
+  border-radius: 0;
+}
+
+/* change border radius for the tab , apply corners on top*/
+
+#exTab3 .nav-pills > li > a {
+  border-radius: 4px 4px 0 0 ;
+  padding: 10px 15px;
+}
+
+#exTab3 .tab-content {
+  color : rgb(0, 0, 0);
+  background-color: #ffffff;
+  padding : 5px 15px;
+}
+  </style>
+  <script>
+    $(function () {
+      $("#nav-placeholder").load("navbar");
+    });
+  </script>
+</head>
+
+<body>
+  <div th:replace="navbar :: navbar"></div>
+
+  <div class="container-fluid">
+    <div class="row p-3">
+      <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12">
+        <div class="card bg-dark text-white">
+          <div class="card-body" style="background-color: rgba(0, 0, 0, 0.3);">
+            <div class="d-flex flex-column">
+              <h5><i class="bi bi-clipboard2-check"></i> IOU</h5>
+            </div>
+            <ul class="menu-list flex-grow-1 mt-3 list-unstyled">
+              <li class="collapsed">
+                <a class="m-link active" data-bs-toggle="collapse" data-bs-target="#dashboard-Components" href="IOUManagement">
+                  <i class="icofont-home fs-5"></i> <span>IOU Management</span> <span
+                    class="arrow icofont-dotted-down ms-auto text-end fs-5"></span></a>
+                <!-- Menu: Sub menu ul -->
+                <ul class="sub-menu collapse show" id="dashboard-Components">
+                  <li><a class="ms-link" href="iouRequestForm">
+                      <span>IOU Request Form</span></a></li>
+                   <li><a class="ms-link" href="iouTravel">
+                      <span>IOU Travel Form</span></a></li>      
+                  <li><a class="ms-link" href="iouView">
+                      <span>IOU Review</span></a></li>
+                  <li><a class="ms-link" href="iouAppove">
+                      <span>IOU Approve</span></a></li>
+                  <li><a class="ms-link" href="#">
+                      <span>IOU Configuration</span></a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+        <div class="card w-100 h-100">
+          <div class="card-body">
+            <h3>เบิกค่าเดินทาง</h3>
+            <hr>
+              <form action="" method="post">
+                <div class="row">
+                  <div class="col-6 mt-3">
+                    <label for="dateIOU">วันที่เบิก</label>
+                    <input class="form-control" type="date" name="dateIOU" id="">
+                  </div>
+                  <div class="col-6 mt-3">
+                    <label for="projectNo">Project No.</label>
+                    <select class="form-control" name="projectNo" id="projectNo">
+                      <option value="1001">1001</option>
+                      <option value="1002">1002</option>
+                      <option value="1003">1003</option>
+                      <option value="1004">1004</option>
+                    </select>
+                  </div>
+                  <div class="col-6 mt-3">
+                    <label for="dateIOU">Project Name</label>
+                    <input class="form-control" type="text" name="pN" id="pN" value="Project Name : 01" readonly>
+                  </div>
+                  
+                  <hr>
+
+                  <div class="container">
+                    <h2 style="color:rgb(255, 255, 255);">Example 3 </h2>
+                  </div>
+                  <div id="exTab3" class="container">
+                    <ul class="nav nav-pills" style="margin-bottom: 10px; justify-content: space-evenly;">
+                      <li class="active">
+                        <a class="pill-free" href="#1b" data-toggle="tab">ค่าน้ำมัน</a>
+                      </li>
+                      <li><a class="pill-free" href="#2b" data-toggle="tab">ค่าทางด่วน</a>
+                      </li>
+                      <li><a class="pill-free" href="#3b" data-toggle="tab">ค่าที่พัก</a>
+                      </li>
+
+                    </ul>
+                  
+                    <div class="tab-content clearfix">
+                      <div class="tab-pane active" id="1b">
+                        <div class="col-6 mt-3">
+                          <div class="form-group">
+                            <label>ประเภทพาหนะ</label> 
+                            <div>
+                              <div class="form-check form-check-inline">
+                                <input name="radio" id="radio_0" type="radio" class="form-check-input" value="1"> 
+                                <label for="radio_0" class="form-check-label">รถยนต์</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input name="radio" id="radio_1" type="radio" class="form-check-input" value="2"> 
+                                <label for="radio_1" class="form-check-label">รถจักรยานยนต์</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6 mt-3">
+                          <label>วัตถุประสงค์ในการใช้งาน</label> 
+                          <textarea class="form-control" name="" id="" cols="30" rows="1"></textarea>
+                        </div>
+                        <div class="col-6 mt-3">
+                          <label>อัปโหลดรูปเส้นทาง</label> 
+                          <input class="form-control-file" type="file" name="imageR" id="imageR" multiple>
+                        </div>
+                        <div class="col-12 mt-3">
+                          <hr>
+                          <label>ค่าเดินทาง</label> 
+                          <div class="form-row">
+                            <div class="col-3">
+                              <label for="">เส้นทางที่ 1</label><br>
+                              <label for="">เริ่มต้น</label>
+                              <select class="form-control" name="" id="">
+                                <option value="">เลือก...</option>
+                              </select>
+                              <label for="">ปลายทาง</label>
+                              <select class="form-control" name="" id="">
+                                <option value="">เลือก...</option>
+                              </select>
+                              <label for="">ค่าใช้จ่าย</label>
+                              <input type="text" class="form-control" placeholder="" value="">
+                            </div>
+                            <div class="col-3">
+                              <label for="">เส้นทางที่ 2</label><br>
+                              <label for="">เริ่มต้น</label>
+                              <select class="form-control" name="" id="">
+                                <option value="">เลือก...</option>
+                              </select>
+                              <label for="">ปลายทาง</label>
+                              <select class="form-control" name="" id="">
+                                <option value="">เลือก...</option>
+                              </select>
+                              <label for="">ค่าใช้จ่าย</label>
+                              <input type="text" class="form-control" placeholder="" value="">
+                            </div>
+                            <div class="col-3 d-flex">
+                              <button class="btn btn-block btn-outline-info align-self-center" type="button">เพิ่มเส้นทาง</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane" id="2b">
+                        <div style="justify-content: center;">
+                          <label >ค่าทางด่วน</label> 
+                        </div>
+                        <div class="form-row" style="justify-content: center;">
+                          <div class="col-3" >
+                            <div style="     display: flex;   justify-content: flex-start;
+                            align-content: space-around;
+                            flex-direction: row;
+                            flex-wrap: wrap;
+                            align-items: center;">
+                              <label for="">บิลที่ 1 </label><br>
+                           
+                              <label style="margin-left: 8px;" for="">ค่าใช้จ่าย</label>
+                              <input type="text" class="form-control" placeholder="" value="">
+                            </div>
+                            
+                           
+                          </div>
+                          
+                          <div class="col-3 d-flex" style="display: -webkit-box !important;">
+                            <button class="btn btn-block btn-outline-info align-self-center" type="button">เพิ่มบิลค่าทางด่วน</button>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div class="tab-pane" id="3b">
+
+                        <div class="form-row">
+                          <div class="col-3">
+                            <label>ค่าที่พัก</label> 
+                            <label for="">จำนวนคืน</label>
+                            <input type="text" class="form-control" placeholder="" value="">
+                          </div>
+                          <div class="col-3">
+                           
+                            <label for="">ค่าใช้จ่าย</label>
+                            <div style="display: flex;">
+                              <input type="text" class="form-control" placeholder="" value="" disabled="false">
+                              <label for="" style="margin-left: 10px;
+                              margin-top: 5px;">  บาท</label>
+                            </div>
+                            
+                          </div>
+                          
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  
+                  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+                  <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-primary btn-block">บันทึก</button>
+                  </div>
+                </div>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

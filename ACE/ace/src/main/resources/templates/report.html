@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico" />
+
+  <title>A.C.E. Parts Co., Ltd.</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+  <link rel="stylesheet" href="../custom.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js"
+    integrity="sha512-lDL6DD6x4foKuSTkRUKIMQJAoisDeojVPXknggl4fZWMr2/M/hMiKLs6sqUvxP/T2zXdrDMbLJ0/ru8QSZrnoQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <style>
+    .list-group-item {
+      /* border: 1px solid rgba(255, 255, 255, 1) !important; */
+    }
+  </style>
+  <script>
+    $(function () {
+      $("#nav-placeholder").load("navbar");
+    });
+  </script>
+</head>
+
+<body>
+  <div th:replace="navbar :: navbar"></div>
+
+  <div class="container-fluid">
+    <div class="row p-3">
+      <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12">
+        <div class="card bg-dark text-white">
+          <div class="card-body" style="background-color: rgba(0, 0, 0, 0.3);">
+            <div class="d-flex flex-column">
+              <h5><i class="bi bi-clipboard2-check"></i> Report</h5>
+            </div>
+            <ul class="menu-list flex-grow-1 mt-3 list-unstyled">
+              <li class="collapsed">
+                <a class="m-link active" data-bs-toggle="collapse" data-bs-target="#dashboard-Components" href="#">
+                  <i class="icofont-home fs-5"></i> <span>Dashboard</span> <span
+                    class="arrow icofont-dotted-down ms-auto text-end fs-5"></span></a>
+                <!-- Menu: Sub menu ul -->
+                <!-- <ul class="sub-menu collapse show" id="dashboard-Components">
+                  <li><a class="ms-link" href="#">
+                      <span>IOU Request Form</span></a></li>
+                  <li><a class="ms-link" href="#">
+                      <span>IOU Review</span></a></li>
+                  <li><a class="ms-link" href="#">
+                      <span>IOU Approve</span></a></li>
+                  <li><a class="ms-link" href="#">
+                      <span>IOU Configuration</span></a></li>
+                </ul> -->
+              </li>
+            </ul>
+            <ul class="menu-list flex-grow-1 mt-3 list-unstyled">
+              <li class="collapsed">
+                <a class="m-link active" data-bs-toggle="collapse" data-bs-target="#dashboard-Components" href="projectManagement">
+                  <i class="icofont-home fs-5"></i> <span>Projects</span> <span
+                    class="arrow icofont-dotted-down ms-auto text-end fs-5"></span></a>
+                </ul> 
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-xl-4 col-sm-12">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5>Project</h5>
+                <canvas id="closeProjectChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-sm-12">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5>Expense</h5>
+                <canvas id="expenses"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-sm-12">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5>Income</h5>
+                <canvas id="income"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card w-100 h-100">
+              <div class="card-body">
+                <canvas id="tranasctionsChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    var canvas = document.getElementById('closeProjectChart');
+    var ctx = canvas.getContext('2d');
+  
+    var completedPercentage = getRandomPercentage();
+    var remainingPercentage = 100 - completedPercentage;
+  
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['', 'Completed', 'Remaining'],
+        datasets: [
+          {
+            data: [0, completedPercentage, remainingPercentage],
+            backgroundColor: ['#ffffff', '#36a2eb', '#ff6384'],
+          },
+        ],
+      },
+      options: {
+        cutout: '70%', // Adjust the size of the hole in the center of the doughnut
+        plugins: {
+          legend: {
+            display: false,
+          },
+          tooltip: {
+            enabled: false,
+          },
+          title: {
+            display: true,
+            text: completedPercentage + '%', // Display the completed percentage in the center of the chart
+            position: 'center',
+            fontColor: '#000000', // Set the font color of the center text
+            fontStyle: 'bold',
+            fontSize: 18,
+            padding: 20,
+          },
+        },
+      },
+    });
+  
+    function getRandomPercentage() {
+      return Math.floor(Math.random() * 100);
+    }
+  </script>
+
+<script>
+  var canvas = document.getElementById('boqChart');
+  var ctx = canvas.getContext('2d');
+
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Expense', 'Remaining'],
+      datasets: [
+        {
+          data: [45, 55],
+          backgroundColor: ['#36a2eb', '#ff6384'],
+        },
+      ],
+    },
+    options: {
+      
+      plugins: {
+          legend: { position: 'bottom'},
+
+        datalabels: {
+          color: 'white', // Customize label color
+          textAlign: 'center',
+          font: {
+            size: 14, // Customize label font size
+          },
+          formatter: function (value, context) {
+            return context.chart.data.labels[context.dataIndex];
+          },
+        },
+      },
+    },
+  });
+</script>
+<script>
+  var canvas = document.getElementById('tranasctionsChart');
+  var ctx = canvas.getContext('2d');
+
+  // Random x-axis data (months)
+  var months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  // Random data for Expense and Forecast
+  var expenseData = getRandomData();
+  var forecastData = getRandomData();
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: months,
+      datasets: [
+        {
+          label: 'Forecast',
+          data: forecastData,
+          backgroundColor: '#36a2eb',
+        },
+      ],
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: 'Expenses',
+        },
+      },
+      scales: {
+        x: {
+          stacked: true,
+        },
+        y: {
+          stacked: true,
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+
+  // Function to generate random data
+  function getRandomData() {
+    var data = [];
+    for (var i = 0; i < 12; i++) {
+      data.push(Math.floor(Math.random() * 1000));
+    }
+    return data;
+  }
+</script>
+
+
+<script>
+  // Generate random data for Expenses and Income
+  var expensesData = getRandomData();
+  var incomeData = getRandomData();
+
+  // Create Expenses chart
+  var expensesCanvas = document.getElementById('expenses');
+  var expensesCtx = expensesCanvas.getContext('2d');
+  new Chart(expensesCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Expenses'],
+      datasets: [
+        {
+          data: [expensesData],
+          backgroundColor: ['#36a2eb'],
+        },
+      ],
+    },
+    options: {
+      plugins: {
+        legend: {
+          display: false,
+        },
+        datalabels: {
+          formatter: function (value) {
+            return value + '%';
+          },
+          color: 'white',
+          font: {
+            weight: 'bold',
+          },
+        },
+      },
+    },
+  });
+
+  // Create Income chart
+  var incomeCanvas = document.getElementById('income');
+  var incomeCtx = incomeCanvas.getContext('2d');
+  new Chart(incomeCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Income'],
+      datasets: [
+        {
+          data: [incomeData],
+          backgroundColor: ['#4caf50'],
+        },
+      ],
+    },
+    options: {
+      plugins: {
+        legend: {
+          display: false,
+        },
+        datalabels: {
+          formatter: function (value) {
+            return value + '%';
+          },
+          color: 'white',
+          font: {
+            weight: 'bold',
+          },
+        },
+      },
+    },
+  });
+
+  // Function to generate random data
+  function getRandomData() {
+    return Math.floor(Math.random() * 100);
+  }
+</script>
+
+
+</body>
+
+</html>

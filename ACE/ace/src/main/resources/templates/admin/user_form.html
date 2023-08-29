@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.C.E. Parts Co., Ltd.</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+<link rel="stylesheet" href="/alte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    
+<link rel="stylesheet" href="/alte/plugins/fontawesome-free/css/all.css">
+<link rel="stylesheet" href="/alte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="/alte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="/alte/dist/css/adminlte.min.css">
+
+<script type="text/JavaScript">
+        function chkPass(){
+    var s = document.dataform;
+
+    if(s.password_master.value != s.password_confirm.value){ 
+    alert("Password mismatch Please confirm your password again");
+    return false;
+    }
+}
+</script>
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Navbar -->
+    <div th:replace="admin/l_menu :: l_menu"></div>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Create / edit User Form</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <!-- form start -->
+                                <form name="dataform" id="dataform" th:action="@{/adduser}" th:object="${userlist}" method="post"
+                                    enctype="multipart/form-data">
+
+                                    <div class="row">
+
+                                        <!--First Half-->
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>User Name</label>
+                                                        <input type="text" name="username" id="username" th:field="*{username}"
+                                                            value=""
+                                                            class="form-control" placeholder="User ..." required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Password</label>
+                                                        <input type="password" name="password_master" id="password_master" th:field="*{password}"  class="form-control"
+                                                            placeholder="Password ...">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Confirm Password</label>
+                                                        <input type="password" name="password_confirm" id="password_confirm" class="form-control"
+                                                            placeholder="Confirm Password ...">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Name</label>
+                                                        <input type="text" name="full_name" id="full_name" th:field="*{full_name}" value="" class="form-control"
+                                                            placeholder="Name ..." required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Department</label>
+                                                        <input type="text" name="department" id="department" th:field="*{department}" value="" class="form-control"
+                                                            placeholder="Department ..." required>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Email</label>
+                                                        <input type="email" name="email" id="email" th:field="*{email}" value=""
+                                                        class="form-control" placeholder="Email..." required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Status</label>
+														<select name="user_status" id="user_status"   class="form-control">
+                                                            <option 
+                                                            th:each="users:${AsStatus}"  
+                                                            th:value="${users}" 
+                                                            th:text="${users}"
+                                                            th:selected ="(${users} == *{user_status})">
+                                                            </option>
+														</select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <!--Second Half-->
+                                    </div> <!--Div Row-->
+
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary" value="save"
+                                            onClick="return chkPass();">Save</button>
+                                        <input type="hidden" th:field="*{id}" />
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+
+        <!-- /.content-wrapper -->
+
+        <!-- <?php include("../admin/l_footer.php");  ?> -->
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->   
+
+<script src="/alte/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/alte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="/alte/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/alte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/alte/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/alte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="/alte/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/alte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="/alte/plugins/jszip/jszip.min.js"></script>
+<script src="/alte/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="/alte/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="/alte/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="/alte/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="/alte/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/alte/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/alte/dist/js/demo.js"></script>
+<script src="/alte/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <script>
+        $(function () {
+            bsCustomFileInput.init();
+        });
+    </script>
+
+</body>
+</html>

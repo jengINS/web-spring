@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico" />
+
+  <title>A.C.E. Parts Co., Ltd.</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+  <link rel="stylesheet" href="../static/custom.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js"
+    integrity="sha512-lDL6DD6x4foKuSTkRUKIMQJAoisDeojVPXknggl4fZWMr2/M/hMiKLs6sqUvxP/T2zXdrDMbLJ0/ru8QSZrnoQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <style>
+    .list-group-item {
+      /* border: 1px solid rgba(255, 255, 255, 1) !important; */
+    }
+
+    .container .steps {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .steps .circle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 150px;
+      width: 150px;
+      color: #999;
+      font-size: 22px;
+      font-weight: 500;
+      border-radius: 50%;
+      background: #fff;
+      border: 4px solid #e0e0e0;
+      transition: all 200ms ease;
+      transition-delay: 0s;
+      text-align: center;
+    }
+
+    .steps .circle.active {
+      transition-delay: 100ms;
+      border-color: #4070f4;
+      color: #4070f4;
+    }
+
+    .steps .progress-bar {
+      position: absolute;
+      height: 4px;
+      width: 100%;
+      background: #e0e0e0;
+      z-index: -1;
+    }
+
+    .progress-bar .indicator {
+      position: absolute;
+      height: 100%;
+      width: 0%;
+      background: #4070f4;
+      transition: all 300ms ease;
+    }
+
+    .container .buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .buttons button {
+      padding: 8px 25px;
+      background: #4070f4;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 400;
+      cursor: pointer;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+      transition: all 200ms linear;
+    }
+
+    .buttons button:active {
+      transform: scale(0.97);
+    }
+
+    .buttons button:disabled {
+      background: #87a5f8;
+      cursor: not-allowed;
+    }
+  </style>
+  <script>
+    $(function () {
+      $("#nav-placeholder").load("navbar.html");
+      $("#sidenav-placeholder").load("iouSideNav.html");
+    });
+  </script>
+</head>
+
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="container-fluid">
+    <div class="row p-3">
+      <div id="sidenav-placeholder" class="col-xl-2 col-lg-2 col-md-12 col-sm-12">
+      </div>
+      <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+        <div class="card w-100 h-100">
+          <div class="card-body">
+            <h3>IOU Approve</h3>
+            <hr>
+            <div class="row">
+              <div class="col-md-3 col-sm-12 d-flex flex-column text-center justify-content-center align-items-center">
+                <h4>BOQ Usage</h4>
+                <div id="cont" data-pct="100">
+                  <svg id="svg" width="200" height="200" viewPort="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <circle r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
+                    <circle id="bar" r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
+                  </svg>
+                </div>
+              </div>
+              <div class="col-md-9 col-sm-12">
+                <div class="container mt-4">
+                  <div class="steps">
+                    <span class="circle active">PM Approve</span>
+                    <span class="circle">Account Approve</span>
+                    <span class="circle">MD Approve</span>
+                    <div class="progress-bar">
+                      <span class="indicator"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-5">
+              <form action="#">
+                <div class="row">
+                  <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                    <div class="form-group">
+                      <label for="">No.</label>
+                      <input type="text" class="form-control" id="#" value="SA001-01" readonly>
+                    </div>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                    <div class="form-group">
+                      <label for="">Type</label>
+                      <input type="text" class="form-control" id="#" value="IOU" readonly>
+                    </div>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                    <div class="form-group">
+                      <label for="">งวดที่</label>
+                      <input type="text" class="form-control" id="#" value="2" readonly>
+                    </div>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                    <div class="form-group">
+                      <label for="">งวดที่</label>
+                      <input type="date" class="form-control" id="#" value="2023-05-29" readonly>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="table-responsive table-bordered my-5">
+              <table class="w-100 text-center">
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>BOQ</th>
+                    <th>Bill</th>
+                    <th>Playment</th>
+                    <th>Remark</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>SSB3</td>
+                    <td>10 May 2023</td>
+                    <td>ค่าของ</td>
+                    <td>ของดี</td>
+                    <td class="text-right">2,300.00</td>
+                    <td>ไม่มี</td>
+                    <td>ไม่มี</dh>
+                    <td>เข้าบัญชีผู้เบิก</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td  class="text-center" colspan="4">Total</td>
+                    <td class="font-weight-bold text-right" >2,300.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <form action="#">
+              <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <div class="form-group">
+                    <label for="">ผู้เบิก</label>
+                    <input type="text" class="form-control" id="#" value="K.JENG" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="">วันที่เบิก</label>
+                    <input type="datetime-local" class="form-control" id="#" value="2023-05-10T11:58" readonly>
+                  </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <div class="form-group">
+                    <label for="">ผู้อนุมัติ</label>
+                    <input type="text" class="form-control" id="#" value="" placeholder="-" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="">วันอนุมัติ</label>
+                    <input type="datetime-local" class="form-control" id="#" value="" readonly>
+                  </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <div class="form-group">
+                    <label for=""><span class="font-weight-bold">เบิกเงินสดแล้ว</span> ชื่อผู้รับเงิน</label>
+                    <input type="text" class="form-control" id="#" value="" placeholder="-" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="">วันที่</label>
+                    <input type="datetime-local" class="form-control" id="#" value="" readonly>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <hr>
+            <div class="d-flex text-center justify-content-center align-items-center" style="column-gap: 20px;">
+              <button class="btn btn-success" style="width: 150px;" onclick="window.location.href='IOUManagement.html'"><i class="bi bi-check"></i> Approve</button>
+              <button class="btn btn-danger" style="width: 150px;" data-toggle="modal" data-target="#rejectModal"><i class="bi bi-x"></i> Reject</button>
+            </div>
+            <hr>
+            <div class="row g-2 mt-5">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <img class="img-fluid" src="../storage/img/IMG20220316132933.jpg" alt="">
+              </div>
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <img class="img-fluid" src="../storage/img/IMG_0760.JPG" alt="">
+              </div>
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <img class="img-fluid" src="../storage/img/line_1526103779711.jpg" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" tabindex="-1" role="dialog" id="rejectModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">IOU Reject</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label for="remark" class="col-form-label">Remark</label> 
+          <textarea id="remark" name="remark" class="form-control" rows="4" cols="50" required="required"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" onclick="window.location.href='IOUManagement.html'">Reject</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+  <script>
+    var options = {
+      pdfOpenParams: {
+        toolbar: '1'
+      },
+      fallbackLink: '<p>อุปกรณ์ของคุณไม่รองรับการดูไฟล์ .pdf หากต้องการดูผ่านหน้าเว็บให้เปิดเว็บผ่านคอมพิวเตอร์. หรือ: <a href="[url]">กดที่นี้</a> เพื่อเปิดในแท็บใหม่</p>'
+    };
+    PDFObject.embed("..\\storage\\test.pdf", "#pdfplace",
+      options);
+    function setPercen(percen) {
+      var val = percen;
+      var $circle = $('#svg #bar');
+      if (isNaN(val)) {
+        val = 100; 
+      }
+      else{
+        var r = $circle.attr('r');
+        var c = Math.PI*(r*2);
+        if (val < 0) { val = 0;}
+        if (val > 100) { val = 100;}
+        var pct = ((100-val)/100)*c;
+        $circle.css({ strokeDashoffset: pct});
+        $('#cont').attr('data-pct',percen);
+      }
+    }
+    $(document).ready(() => {
+      setPercen(70)
+    });
+  </script>
+
+
+</body>
+
+</html>

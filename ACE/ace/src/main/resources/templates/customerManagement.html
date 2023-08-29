@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico" />
+
+  <title>A.C.E. Parts Co., Ltd.</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+  <link rel="stylesheet" href="../static/custom.css">
+  <link rel="stylesheet" href="../static/lib/DataTables/datatables.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js"
+    integrity="sha512-lDL6DD6x4foKuSTkRUKIMQJAoisDeojVPXknggl4fZWMr2/M/hMiKLs6sqUvxP/T2zXdrDMbLJ0/ru8QSZrnoQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <style>
+    .list-group-item {
+      /* border: 1px solid rgba(255, 255, 255, 1) !important; */
+    }
+  </style>
+  <script>
+    $(function () {
+      $("#nav-placeholder").load("navbar.html");
+      $("#sidenav-placeholder").load("supplierSideNav.html");
+    });
+    function onDelete(id, name) {
+        if (confirm('คุณยืนยันที่จะลบ ' + name + ' ใช่หรือไม่?')){
+            alert('ลบข้อมูลสำเร็จ')
+        }
+    }
+  </script>
+</head>
+
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="container-fluid">
+    <div class="row p-3">
+      <div id="sidenav-placeholder" class="col-xl-2 col-lg-2 col-md-12 col-sm-12"></div>
+      <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+        <div class="card w-100 h-100">
+          <div class="card-body">
+
+            <div class="w-100 d-flex flex-row justify-content-between my-2">
+              <h3>Customer Management</h3>
+              <button class="btn btn-primary" onclick="window.location.href='createCustomer.html'"><i
+                  class="bi bi-plus-circle-fill"></i> Add Customer</button>
+            </div>
+            <div class="table-responsive">
+              <table class="table" id="TableList">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Customer Name</th>
+                    <th>Tax Number</th>
+                    <th>Address</th>
+                    <th>Telephone</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>1</th>
+                    <td><a href="customerDetail.html?id=1" class="text-primary">Customer 1</a></td>
+                    <td>11223344556</td>
+                    <td>123 ถ.ประชาชื่น แขวง บางซื่อ เขต บางซื่อ กทม. 10300</td>
+                    <td>099-0599999</td>
+                    <td class="text-right">
+                      <div class="btn-group" role="group" aria-label="actionsButton">
+                        <button type="button" class="btn btn-outline-warning" onclick="window.location.href='customerDetail.html?id=1'"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="btn btn-outline-danger" onclick="onDelete(1, 'Supplier 1')"><i class="bi bi-trash3"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>2</th>
+                    <td><a href="customerDetail.html?id=2" class="text-primary">Customer 2</a></td>
+                    <td>11223344556</td>
+                    <td>123 ถ.ประชาชื่น แขวง บางซื่อ เขต บางซื่อ กทม. 10300</td>
+                    <td>099-0599999</td>
+                    <td class="text-right">
+                      <div class="btn-group" role="group" aria-label="actionsButton">
+                        <button type="button" class="btn btn-outline-warning" onclick="window.location.href='customerDetail.html?id=2'"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="btn btn-outline-danger" onclick="onDelete(2, 'Supplier 2')"><i class="bi bi-trash3"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>3</th>
+                    <td><a href="customerDetail.html?id=3" class="text-primary">Customer 3</a></td>
+                    <td>11223344556</td>
+                    <td>123 ถ.ประชาชื่น แขวง บางซื่อ เขต บางซื่อ กทม. 10300</td>
+                    <td>099-0599999</td>
+                    <td class="text-right">
+                      <div class="btn-group" role="group" aria-label="actionsButton">
+                        <button type="button" class="btn btn-outline-warning" onclick="window.location.href='customerDetail.html?id=3'"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="btn btn-outline-danger" onclick="onDelete(3, 'Supplier 3')"><i class="bi bi-trash3"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>4</th>
+                    <td><a href="customerDetail.html?id=4" class="text-primary">Customer 4</a></td>
+                    <td>11223344556</td>
+                    <td>123 ถ.ประชาชื่น แขวง บางซื่อ เขต บางซื่อ กทม. 10300</td>
+                    <td>099-0599999</td>
+                    <td class="text-right">
+                      <div class="btn-group" role="group" aria-label="actionsButton">
+                        <button type="button" class="btn btn-outline-warning" onclick="window.location.href='customerDetail.html?id=4'"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="btn btn-outline-danger" onclick="onDelete(4, 'Supplier 4')"><i class="bi bi-trash3"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>5</th>
+                    <td><a href="customerDetail.html?id=5" class="text-primary">Customer 5</a></td>
+                    <td>11223344556</td>
+                    <td>123 ถ.ประชาชื่น แขวง บางซื่อ เขต บางซื่อ กทม. 10300</td>
+                    <td>099-0599999</td>
+                    <td class="text-right">
+                      <div class="btn-group" role="group" aria-label="actionsButton">
+                        <button type="button" class="btn btn-outline-warning" onclick="window.location.href='customerDetail.html?id=5'"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="btn btn-outline-danger" onclick="onDelete(5, 'Supplier 5')"><i class="bi bi-trash3"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>6</th>
+                    <td><a href="customerDetail.html?id=6" class="text-primary">Customer 6</a></td>
+                    <td>11223344556</td>
+                    <td>123 ถ.ประชาชื่น แขวง บางซื่อ เขต บางซื่อ กทม. 10300</td>
+                    <td>099-0599999</td>
+                    <td class="text-right">
+                      <div class="btn-group" role="group" aria-label="actionsButton">
+                        <button type="button" class="btn btn-outline-warning" onclick="window.location.href='customerDetail.html?id=6'"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="btn btn-outline-danger" onclick="onDelete(6, 'Supplier 6')"><i class="bi bi-trash3"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <!-- <tr>
+                    <th>Project No</th>
+                    <th>Project</th>
+                    <th>Expense</th>
+                    <th>Remaining</th>
+                    <th>Created Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr> -->
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/lib/DataTables/datatables.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('#TableList').DataTable({
+        "ordering": true,
+        order: [[0, 'desc']],
+        "oLanguage": {
+          "sEmptyTable": "ไม่มีรายการ Customer ที่ถูกเพิ่ม"
+        }
+      });
+    });
+  </script>
+
+
+</body>
+
+</html>

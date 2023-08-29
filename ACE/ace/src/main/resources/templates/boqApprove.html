@@ -1,0 +1,128 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/image/ico-logo.ico">
+
+    <title>A.C.E. Parts Co., Ltd.</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" href="../static/custom.css">
+    <link rel="stylesheet" href="../static/lib/DataTables/datatables.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js" integrity="sha512-lDL6DD6x4foKuSTkRUKIMQJAoisDeojVPXknggl4fZWMr2/M/hMiKLs6sqUvxP/T2zXdrDMbLJ0/ru8QSZrnoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        .list-group-item {
+            /* border: 1px solid rgba(255, 255, 255, 1) !important; */
+        }
+    </style>
+    <script>
+        $(function () {
+            $("#nav-placeholder").load("navbar.html");
+            $("#sidenav-placeholder").load("projectSideNav.html");
+        });
+    </script>
+</head>
+
+<body>
+    <div id="nav-placeholder"></div>
+
+    <div class="container-fluid">
+        <div class="row p-3">
+            <div id="sidenav-placeholder" class="col-xl-2 col-lg-2 col-md-12 col-sm-12">
+            </div>
+            <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+                <div class="card w-100 h-100">
+                    <div class="card-body">
+                        <div class="w-100 d-flex justify-content-between">
+                            <div>
+                                <h3>Bill of Quantity</h3>
+                            </div>
+                            <div>
+                                <table>
+                                    <tbody><tr>
+                                        <td>Date : </td>
+                                        <td>
+                                            <input type="date" class="form-control" required="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Budget Estimate By : </td>
+                                        <td>
+                                            <select class="form-control" name="" id="" required="">
+                                                <option value="1">User 1</option>
+                                                <option value="2">User 2</option>
+                                                <option value="3">User 3</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody></table>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="table-responsive table-bordered my-5">
+                                <table class="w-100 text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Description</th>
+                                            <th>Cost</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>ค่าของ</td>
+                                            <td>2,300.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center" colspan="2">Total</td>
+                                            <td class="font-weight-bold text-right">2,300.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="w-100 d-flex justify-content-between">
+                            <div class="" style="display: flex;flex-direction: row;flex-wrap: nowrap;align-content: center;justify-content: center;align-items: stretch;">
+                                <button class="btn btn-primary" onclick="window.location.href='boqList.html'" style="width: 100px;margin: 10px;" type="submit">อนุมัติ</button>
+                                <button class="btn btn-danger" onclick="window.location.href='boqList.html'" style="width: 100px;margin: 10px;" type="submit">ไม่อนุมัติ</button>
+                            </div>
+                            <div class="table-bordered">
+                                <table class="">
+                                    <tbody><tr>
+                                        <td>Subtotal : </td>
+                                        <td>9,610</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tax Component : </td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Grand Total : </td>
+                                        <td>9,610</td>
+                                    </tr>
+                                </tbody></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/lib/DataTables/datatables.min.js"></script>
+
+
+</body></html>

@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico" />
+
+  <title>A.C.E. Parts Co., Ltd.</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.css" rel="stylesheet" th:href="@{css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{custom.css}">
+    <link rel="stylesheet" th:href="@{lib/DataTables/datatables.min.css}">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js"
+    integrity="sha512-lDL6DD6x4foKuSTkRUKIMQJAoisDeojVPXknggl4fZWMr2/M/hMiKLs6sqUvxP/T2zXdrDMbLJ0/ru8QSZrnoQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <style>
+    .list-group-item {
+      /* border: 1px solid rgba(255, 255, 255, 1) !important; */
+    }
+    .card-body {
+    
+    padding: 0.25rem;
+  }
+  </style>
+  <script>
+    $(function () {
+      $("#nav-placeholder").load("/navbar");
+      $("#sidenav-placeholder").load("/accountSideNav");
+    });
+  </script>
+</head>
+
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="container-fluid">
+    <div class="row p-3">
+      <div id="sidenav-placeholder" class="col-xl-2 col-lg-2 col-md-12 col-sm-12"></div>
+      <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+        <div class="card w-100 h-100">
+          <div class="card-body">
+
+            <div class="w-100 d-flex flex-row justify-content-between my-2">
+              <h3>Transaction</h3>
+              <button class="btn btn-primary" onclick="window.location.href='createTransaction.html'"><i class="bi bi-plus-circle-fill"></i> Add Transaction</button>
+            </div>
+            <div class="table-responsive">
+              <table class="table" id="TableList">
+                <thead>
+                  <tr>
+                    <th>NO.</th>
+                    <th>DATE</th>
+                    <th>WITHDRAW</th>
+                    <th>DEPOSIT</th>
+                    <th>BALANCE</th>
+                    <th>REMARK</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>10/01/2023</td><td>32,100.00</td><td>0.00</td><td>44,822.76</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>2</td><td>10/01/2023</td><td>5,000.00</td><td>0.00</td><td>39,822.76</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>3</td><td>10/01/2023</td><td>24,139.00</td><td>0.00</td><td>15,683.76</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>4</td><td>16/01/2023</td><td>4,144.22</td><td>0.00</td><td>11,539.54</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>5</td><td>16/01/2023</td><td>1,440.00</td><td>0.00</td><td>10,099.54</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>6</td><td>24/01/2023</td><td>0.00</td><td>150,000.00</td><td>160,099.54</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>7</td><td>25/01/2023</td><td>2,000.00</td><td>0.00</td><td>158,099.54</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>8</td><td>25/01/2023</td><td>500.00</td><td>0.00</td><td>157,599.54</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>9</td><td>25/01/2023</td><td>80,000.00</td><td>0.00</td><td>77,599.54</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>10</td><td>25/01/2023</td><td>58,122.40</td><td>0.00</td><td>19,477.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>11</td><td>25/01/2023</td><td>7,490.00</td><td>0.00</td><td>11,987.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>12</td><td>25/01/2023</td><td>10,379.00</td><td>0.00</td><td>1,608.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>13</td><td>27/01/2023</td><td>270.00</td><td>0.00</td><td>1,338.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>14</td><td>27/01/2023</td><td>0.00</td><td>150,000.00</td><td>151,338.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>15</td><td>27/01/2023</td><td>25,680.00</td><td>0.00</td><td>125,658.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>16</td><td>27/01/2023</td><td>0.00</td><td>16,500.00</td><td>142,158.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>17</td><td>27/01/2023</td><td>4,160.00</td><td>0.00</td><td>137,998.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>18</td><td>27/01/2023</td><td>1,000.00</td><td>0.00</td><td>136,998.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>19</td><td>27/01/2023</td><td>5,000.00</td><td>0.00</td><td>131,998.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>20</td><td>27/01/2023</td><td>3,000.00</td><td>0.00</td><td>128,998.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>21</td><td>27/01/2023</td><td>1,195.00</td><td>0.00</td><td>127,803.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>22</td><td>27/01/2023</td><td>1,500.00</td><td>0.00</td><td>126,303.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>23</td><td>27/01/2023</td><td>2,500.00</td><td>0.00</td><td>123,803.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>24</td><td>27/01/2023</td><td>1,000.00</td><td>0.00</td><td>122,803.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>25</td><td>27/01/2023</td><td>19,365.00</td><td>0.00</td><td>103,438.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>26</td><td>27/01/2023</td><td>9,000.00</td><td>0.00</td><td>94,438.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>27</td><td>27/01/2023</td><td>7,380.00</td><td>0.00</td><td>87,058.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>28</td><td>27/01/2023</td><td>5,000.00</td><td>0.00</td><td>82,058.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>29</td><td>27/01/2023</td><td>5,180.00</td><td>0.00</td><td>76,878.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>30</td><td>27/01/2023</td><td>16,500.00</td><td>0.00</td><td>60,378.14</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>31</td><td>27/01/2023</td><td>1,747.60</td><td>0.00</td><td>58,630.54</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>32</td><td>27/01/2023</td><td>64.73</td><td>0.00</td><td>58,565.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>33</td><td>31/01/2023</td><td>500.00</td><td>0.00</td><td>58,065.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>34</td><td>15/02/2023</td><td>2,744.00</td><td>0.00</td><td>55,321.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>35</td><td>15/02/2023</td><td>31,475.00</td><td>0.00</td><td>23,846.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>36</td><td>15/02/2023</td><td>62.00</td><td>0.00</td><td>23,784.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>37</td><td>15/02/2023</td><td>9,111.00</td><td>0.00</td><td>14,673.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>38</td><td>15/02/2023</td><td>1,500.00</td><td>0.00</td><td>13,173.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>39</td><td>20/02/2023</td><td>0.00</td><td>94,128.00</td><td>107,301.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>40</td><td>23/02/2023</td><td>2,016.00</td><td>0.00</td><td>105,285.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>41</td><td>23/02/2023</td><td>0.00</td><td>88,298.00</td><td>193,583.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>42</td><td>23/02/2023</td><td>1,092.00</td><td>0.00</td><td>192,491.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>43</td><td>23/02/2023</td><td>15.00</td><td>0.00</td><td>192,476.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>44</td><td>28/02/2023</td><td>230.00</td><td>16,500.00</td><td>208,746.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>45</td><td>28/02/2023</td><td>1,510.00</td><td>0.00</td><td>207,236.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>46</td><td>28/02/2023</td><td>1,208.22</td><td>0.00</td><td>206,028.59</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>47</td><td>28/02/2023</td><td>366.78</td><td>0.00</td><td>205,661.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>48</td><td>28/02/2023</td><td>16,500.00</td><td>0.00</td><td>189,161.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>49</td><td>10/03/2023</td><td>5,000.00</td><td>0.00</td><td>184,161.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>50</td><td>10/03/2023</td><td>38,520.00</td><td>0.00</td><td>145,641.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>51</td><td>10/03/2023</td><td>2,500.00</td><td>0.00</td><td>143,141.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>52</td><td>10/03/2023</td><td>3,000.00</td><td>0.00</td><td>140,141.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>53</td><td>10/03/2023</td><td>840.00</td><td>0.00</td><td>139,301.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>54</td><td>10/03/2023</td><td>54,649.00</td><td>0.00</td><td>84,652.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>55</td><td>10/03/2023</td><td>1,500.00</td><td>0.00</td><td>83,152.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>56</td><td>13/03/2023</td><td>0.00</td><td>80,878.00</td><td>164,030.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>57</td><td>15/03/2023</td><td>30,000.00</td><td>0.00</td><td>134,030.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>58</td><td>15/03/2023</td><td>0.00</td><td>650,000.00</td><td>784,030.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>59</td><td>15/03/2023</td><td>8,000.00</td><td>0.00</td><td>776,030.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>60</td><td>15/03/2023</td><td>5,000.00</td><td>0.00</td><td>771,030.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>61</td><td>15/03/2023</td><td>2,000.00</td><td>0.00</td><td>769,030.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>62</td><td>15/03/2023</td><td>41,816.00</td><td>0.00</td><td>727,214.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>63</td><td>15/03/2023</td><td>20,000.00</td><td>0.00</td><td>707,214.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>64</td><td>15/03/2023</td><td>16,500.00</td><td>0.00</td><td>690,714.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>65</td><td>15/03/2023</td><td>185,164.00</td><td>0.00</td><td>505,550.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>66</td><td>15/03/2023</td><td>2,000.00</td><td>0.00</td><td>503,550.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>67</td><td>15/03/2023</td><td>1,500.00</td><td>0.00</td><td>502,050.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>68</td><td>15/03/2023</td><td>33,084.00</td><td>0.00</td><td>468,966.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>69</td><td>15/03/2023</td><td>47,203.00</td><td>0.00</td><td>421,763.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>70</td><td>15/03/2023</td><td>4,661.00</td><td>0.00</td><td>417,102.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>71</td><td>15/03/2023</td><td>1,260.00</td><td>0.00</td><td>415,842.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>72</td><td>15/03/2023</td><td>60.00</td><td>0.00</td><td>415,782.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>73</td><td>15/03/2023</td><td>299.00</td><td>0.00</td><td>415,483.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>74</td><td>15/03/2023</td><td>258,000.00</td><td>0.00</td><td>157,483.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>75</td><td>15/03/2023</td><td>6,420.00</td><td>0.00</td><td>151,063.81</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>76</td><td>23/03/2023</td><td>1,026.20</td><td>0.00</td><td>150,037.61</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>77</td><td>23/03/2023</td><td>1,048.60</td><td>0.00</td><td>148,989.01</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>78</td><td>23/03/2023</td><td>312.90</td><td>0.00</td><td>148,676.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>79</td><td>23/03/2023</td><td>15.00</td><td>0.00</td><td>148,661.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>80</td><td>28/03/2023</td><td>32,670.00</td><td>0.00</td><td>115,991.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>81</td><td>28/03/2023</td><td>0.00</td><td>16,500.00</td><td>132,491.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>82</td><td>28/03/2023</td><td>11,128.00</td><td>0.00</td><td>121,363.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>83</td><td>28/03/2023</td><td>0.00</td><td>250,000.00</td><td>371,363.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>84</td><td>28/03/2023</td><td>1,000.00</td><td>0.00</td><td>370,363.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>85</td><td>28/03/2023</td><td>17,976.00</td><td>0.00</td><td>352,387.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>86</td><td>28/03/2023</td><td>189,270.00</td><td>0.00</td><td>163,117.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>87</td><td>28/03/2023</td><td>2,000.00</td><td>0.00</td><td>161,117.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>88</td><td>28/03/2023</td><td>500.00</td><td>0.00</td><td>160,617.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>89</td><td>28/03/2023</td><td>3,000.00</td><td>0.00</td><td>157,617.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>90</td><td>28/03/2023</td><td>1,000.00</td><td>0.00</td><td>156,617.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>91</td><td>28/03/2023</td><td>3,000.00</td><td>0.00</td><td>153,617.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>92</td><td>28/03/2023</td><td>2,000.00</td><td>0.00</td><td>151,617.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>93</td><td>28/03/2023</td><td>1,500.00</td><td>0.00</td><td>150,117.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>94</td><td>28/03/2023</td><td>1,000.00</td><td>0.00</td><td>149,117.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>95</td><td>28/03/2023</td><td>2,000.00</td><td>0.00</td><td>147,117.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>96</td><td>28/03/2023</td><td>3,500.00</td><td>0.00</td><td>143,617.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>97</td><td>28/03/2023</td><td>4,775.00</td><td>0.00</td><td>138,842.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>98</td><td>28/03/2023</td><td>40.00</td><td>0.00</td><td>138,802.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>99</td><td>28/03/2023</td><td>30,797.00</td><td>0.00</td><td>108,005.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>100</td><td>28/03/2023</td><td>4,976.00</td><td>0.00</td><td>103,029.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>101</td><td>28/03/2023</td><td>3,810.00</td><td>0.00</td><td>99,219.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>102</td><td>28/03/2023</td><td>16,500.00</td><td>0.00</td><td>82,719.11</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>103</td><td>28/03/2023</td><td>950.16</td><td>0.00</td><td>81,768.95</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>104</td><td>28/03/2023</td><td>770.40</td><td>0.00</td><td>80,998.55</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>105</td><td>28/03/2023</td><td>1,460.55</td><td>0.00</td><td>79,538.00</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>106</td><td>28/03/2023</td><td>1,618.15</td><td>0.00</td><td>77,919.85</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                    <tr><td>107</td><td>28/03/2023</td><td>1,215.41</td><td>0.00</td><td>76,704.44</td><td></td><td class="text-right">
+                        <div class="btn-group" role="group" aria-label="actionsButton">
+                          <button type="button" class="btn btn-outline-info" onclick="window.location.href='transactionDetail.html?id=1'"><i class="bi bi-eye"></i></button>
+                        </div>
+                      </td></tr>
+                </tbody>
+                <tfoot>
+                  <!-- <tr>
+                    <th>Project No</th>
+                    <th>Project</th>
+                    <th>Expense</th>
+                    <th>Remaining</th>
+                    <th>Created Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr> -->
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/lib/DataTables/datatables.min.js"></script>
+ 
+
+
+</body>
+
+</html>

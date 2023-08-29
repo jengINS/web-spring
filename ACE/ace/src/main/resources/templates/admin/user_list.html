@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A.C.E. Parts Co., Ltd.</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+<!-- <link rel="stylesheet" href="../../static/alte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css"> -->
+<link rel="stylesheet" href="/alte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/alte/plugins/fontawesome-free/css/all.css">
+<link rel="stylesheet" href="/alte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="/alte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="/alte/dist/css/adminlte.min.css">
+<!-- <link rel="stylesheet" href="../l_head_m1.php"> -->
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <!-- Site wrapper -->
+  <div class="wrapper">
+    <!-- Navbar -->
+    <div th:replace="admin/l_menu :: l_menu"></div>
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">User List</h3><p th:text="${isLogin}"></p><p th:text="${ps_id}"></p>
+                  <div class=" float-sm-right">
+                    <a class="btn btn-block btn-success btn-sm" href="adduser"><i class="fas fa-plus-circle"></i> Create User</a>
+                  </div>
+
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table id="example_userlist" class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Department</th>
+                        <th>User Status</th>
+                        <th>Tools</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="users:${user_list}">
+                        <td th:text="${users.id}"></td>
+                        <td th:text="${users.full_name}"></td>
+                        <td th:text="${users.email}"></td>
+                        <td th:text="${users.department}"></td>
+                        <td> 
+                        <span th:if="${users.user_status == 'A'}">
+                        <span class="badge badge-pill badge-success"><i
+                                    class="fas fa-check-circle">
+                                </i>
+                                Active
+                        </span>
+                        </span>
+                        <span th:unless="${users.user_status == 'A'}">
+                          <span class="badge badge-pill badge-danger"><i class="far fa-times-circle">
+                            </i>
+                            InActive
+                          </span>
+                        </span>
+                        </td>
+                        <td>
+                        <a class="btn btn-primary btn-xs" th:href="@{/UserPermission/{id}(id=${users.id})}">
+                          <i class="fas fa-eye">
+                          </i>
+                          Permission
+                        </a>
+                        <a class="btn btn-info btn-xs" th:href="@{/UserView/{id}(id=${users.id})}">
+                          <i class="fas fa-search">
+                          </i>
+                          View
+                        </a>
+                        <a class="btn btn-warning btn-xs" th:href="@{/UserUpdate/{id}(id=${users.id})}">
+                            <i class="fas fa-pencil-alt">
+                            </i>
+                            Edit
+                        </a>
+
+                        </td>                    
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Department</th>
+                        <th>User Status</th>
+                        <th>Tools</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </section> <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <!-- jQuery -->
+  <script src="/alte/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/alte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- DataTables  & Plugins -->
+  <script src="/alte/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="/alte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="/alte/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="/alte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="/alte/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="/alte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script src="/alte/plugins/jszip/jszip.min.js"></script>
+  <script src="/alte/plugins/pdfmake/pdfmake.min.js"></script>
+  <script src="/alte/plugins/pdfmake/vfs_fonts.js"></script>
+  <script src="/alte/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="/alte/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="/alte/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/alte/dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/alte/dist/js/demo.js"></script>
+  <!-- Page specific script -->
+  <script>
+    $(function() {
+      $("#example1").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      $('#example_grouplist').DataTable({
+        "paging": true,
+        "pageLength": 30,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+      $('#example_userlist').DataTable({
+        "paging": true,
+        "pageLength": 30,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+  </script>
+</body>
+
+</html>
