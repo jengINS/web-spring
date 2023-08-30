@@ -140,18 +140,7 @@
                                                 
                                                 <td>ค่าของ</td><td>น๊อต</td>
                                                 <td>1,300.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                
-                                                <td>ค่าของ</td><td>กรรไกร</td>
-                                                <td>1588,300.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                
-                                                <td>ค่าแรง</td><td>คนงาน1</td>
-                                                <td>1,010.22</td>
+                                           
                                             </tr> -->
                                         </tbody>
                                         
@@ -207,8 +196,13 @@
                             </form>
                         </div>
                         <div class="w-100 d-flex justify-content-between">
-                            <div class="" style="width: 49% !important;">
-                                <button id="submitButton" class="btn btn-primary btn-block w-100"  type="submit">submit</button>
+                            <div style="display: flex;width: 100%;flex-direction: row;justify-content: space-around;flex-wrap: nowrap;">
+                                <div class="" style="width: 30% !important;">
+                                    <button id="submitButton" class="btn btn-primary btn-block w-100"  type="submit">submit</button>
+                                </div>
+                                <div class="" style="width: 30% !important;">
+                                    <button id="cancelButton" class="btn btn-primary btn-block w-100" onclick="window.location.href = '/boqList'"   type="submit">Cancel</button>
+                                </div>
                             </div>
                             
                                 <div class="table-bordered" style="border:unset;">
@@ -356,17 +350,30 @@
            
             <script>
                      function closeModal() {
-                        const modal = document.getElementById("myModal");
-                        const modalFrame = document.getElementById("modalFrame");
-                        modal.style.display = "none";
+                                const modal = document.getElementById("myModal");
+                                const modalFrame = document.getElementById("modalFrame");
+                                modal.style.display = "none";
                         }
 
-                    function receiveDataFromModal(data) {
-
+                    function receiveDataFromModal(data) {  
+                        generateTable(data);
+                        closeModal();
+                    }
+                    function generateTable(data)
+                    {
+                        //console.log(data);
                             var tableBody = document.getElementById("tableDetail");
                             for (var i = 1; i <= data.length; i++) {
-
+                            
                             var newRow = document.createElement("tr");
+                           
+                            var celldel = document.createElement("td");
+                            celldel.style="border: unset;width: 10px;";
+                            var bdel = document.createElement("button");
+                            bdel.innerText="X";
+                            bdel.style="color: red;border: unset;";
+                            bdel.className="delete-button";
+                            celldel.appendChild(bdel);
                             var cell1 = document.createElement("td");
                             cell1.textContent = tableBody.children.length+1; // Set the value for the first cell
                             var cell2 = document.createElement("td");
@@ -376,19 +383,23 @@
                             var cell4 = document.createElement("td");
                             cell4.textContent = data[i-1].cost; // Set the value for the fourth cell
 
+                           
                             newRow.appendChild(cell1);
                             newRow.appendChild(cell2);
                             newRow.appendChild(cell3);
                             newRow.appendChild(cell4);
+                            newRow.appendChild(celldel);
 
                             
                             tableBody.appendChild(newRow);
                         }
-                   // console.log(data);
-                    calTotaltable();
-                    calGrandTotal();
-                    // Close the modal after receiving data
-                    closeModal();
+                        var ttd =document.getElementById("tableDetail").querySelectorAll("tr");
+                        for(var i=0;i<ttd.length;i++)
+                        {  
+                            ttd[i].children[0].innerText=i+1;
+                        }
+                        calTotaltable();
+                        calGrandTotal();
                     }
             </script>
             <script>
@@ -431,12 +442,133 @@
                     });
                     
                 }
+
+                function submitEdit() {
+                    // Get the data from the table cells
+                      
+                        var tableRows = document.querySelectorAll("table tr");
+                
+
+                        ///sent data array
+                        var rowDataInArray=[];
+                        rowDataInArray.push(["custom_Edit_Boq",document.getElementById("dateInput").value.toString(),document.getElementById("useBoq").innerText,document.getElementById("boqID").value.toString(),document.getElementById("grandTotal").innerText]);
+                        var trcells = document.getElementById("tableDetail").querySelectorAll("tr");
+                        trcells.forEach(function(trcell) {
+                            var rowDataCell =[];
+                            var cells = trcell.querySelectorAll("td");
+                            cells.forEach(function(cell) {
+                                rowDataCell.push(cell.innerText);
+                             });
+                            rowDataInArray.push(rowDataCell);
+                        });
+
+                    // Send the data to the Spring Controller using AJAX
+                    $.ajax({
+                        type: "POST",
+                        url: "/custom_update_Boq",
+                        data: JSON.stringify(rowDataInArray),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(response) {
+                             window.location.href = "/boqList";
+                        },
+                        error: function(error) {
+
+                            alert(error.responseText);
+                            // Handle errors if necessary
+                        }
+
+                        
+                    });
+                    
+                }
             </script>
+            <script>
+                //// set event  Double click to  change data
+                document.addEventListener("DOMContentLoaded", function() {
+                const table = document.getElementById("tableDetail");
+
+                table.addEventListener("dblclick", function(event) {
+                    const target = event.target;
+                    const row = target.closest("tr");
+                    const cells = Array.from(row.getElementsByTagName("td"));
+                     const cellIndex = cells.indexOf(target);
+                    if (target.tagName === "TD") {
+                        const currentValue = target.innerText;
+                        const inputElement = document.createElement("input");
+                        inputElement.type = "text";
+                        inputElement.value = currentValue;
+
+                        inputElement.addEventListener("blur", function() {
+                           
+                            if( cellIndex==3){
+                            target.innerText = validateNumberInput(this.value);
+                            calTotaltable();
+                            calGrandTotal();
+                             }
+                             else
+                             target.innerText = this.value;
+                            /// check number only
+                        });
+
+                        target.innerText = "";
+                        
+                        target.appendChild(inputElement);
+                        inputElement.focus();
+                        
+                    
+                    }
+                });
+
+               
+                /// click delete
+                table.addEventListener("click", function(event) {
+                    const target = event.target;
+                    
+                    // Check if the clicked element is the delete button (X)
+                    if (target.classList.contains("delete-button")) {
+                    const row = target.closest("tr"); // Find the parent row
+                    if (row) {
+                        const userConfirmed = confirm("Do you want to Delete?");
+                            if (userConfirmed) {validateNumberInput
+                                row.remove(); // Remove the row
+                                calTotaltable();
+                                calGrandTotal();
+                            } else {
+                                // User clicked "Cancel" (No)
+                            }
+                        
+                        
+                    }
+                    }
+                });
+
+                });
+            </script>
+
             <script th:inline="javascript">
                 var dataArray  = /*[[${qArray}]]*/ '';
                 var btt =document.getElementById("submitButton");
+                
+                
                 if(dataArray!=null)
-                btt.innerText="Edit Submit";
+                {
+                    btt.innerText="Edit Submit";
+                    const convertedArray = dataArray.map(innerArray => {
+                        return {
+                            "head": innerArray[3],
+                            "description": innerArray[4],
+                            "cost": innerArray[5].toString()
+                        };
+                    });
+                    generateTable(convertedArray);
+                    var bid =document.getElementById("boqID");
+                    bid.disabled = true;
+                    bid.value=dataArray[0][2];
+                    
+                    
+                }
+
                 btt.addEventListener("click", function() {
                     var inputElement = document.getElementById("boqID");
 
@@ -452,20 +584,35 @@
                     }
                     else
                     {
-                        var dataArray2  = /*[[${qArray}]]*/ '';
-                        if(dataArray2!=null)
-                        {
-                           // editData();
-                        }
-                        else
-                        submitData();
+                       
+                        const userConfirmed = confirm("Do you want to Submit?");
+                            if (userConfirmed) {validateNumberInput
+                                var dataArray2  = /*[[${qArray}]]*/ '';
+                                if(dataArray2!=null)
+                                {
+                                    submitEdit();
+                                }
+                                else
+                                submitData();
+                            } else {
+                                // User clicked "Cancel" (No)
+                            }
+                        
                     }
                 });
             </script>
-            <!-- <script>
-                var url = window.location.href;
-                    var url = new URL(url);
-                    var idValue = url.searchParams.get('id');
-
-            </script> -->
+           <script>
+            function  validateNumberInput(input) {
+          // Remove non-numeric characters
+                        input = input.replace(/[^0-9.]/g, '');
+                    
+                    // Ensure that there's only one dot in the input
+                            var dotCount = input.split('.').length - 1;
+                            if (dotCount > 1) {
+                                input = input.replace(/\./g, '');
+                            }
+                            return input; 
+                    }
+                   
+        </script>
 </body></html>
